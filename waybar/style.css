@@ -1,0 +1,166 @@
+@import "/home/eluciani/.cache/wal/colors-waybar.css";
+/* @define-color darkest #11111b; */
+/* @define-color bg #181825; */
+/* @define-color global-bar-bg #181825; */
+/* @define-color bg-light #1e1e2e; */
+/* @define-color yellow #f9e2af; */
+/* @define-color text #cdd6f4; */
+
+
+* {
+  all: unset;
+  font-size: 1em;
+  font-family: 'JetBrainsMono Nerd Font';
+  font-weight: 600;
+}
+
+tooltip {
+  background: @background;
+  color: @foreground;
+  border-radius: 2px;
+}
+
+window .modules-left {
+  background-color: @background;
+  border-radius: 2px;
+  padding: 0 12px 0 15px;
+}
+
+window .modules-center {
+  background-color: @background;
+  border-radius: 2px;
+  padding: 0 15px;
+}
+
+window .modules-right {
+  background-color: @background;
+  border-radius: 2px;
+  padding: 0 15px;
+}
+
+window .modules-right * {
+  padding-right: 15px;
+}
+
+window .modules-left * {
+  padding-left: 15px;
+}
+
+window#waybar {
+  /* background-color: @background; */
+  border-radius: 2px;
+  color: @foreground;
+}
+
+window #menu * {
+    padding: 0;
+}
+
+window #menu .drawer-child * {
+    padding: 0 0 0 5px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0);
+    border-top: 2px solid rgba(0, 0, 0, 0);
+}
+
+window #menu .drawer-child *:hover {
+    background-color: @color8;
+    border-bottom: 2px solid @color11;
+    transition: all .5s ease;
+}
+
+#custom-logo {
+    color: @color11;
+}
+
+#taskbar * {
+    padding: 1px 3px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0);
+    border-top: 2px solid rgba(0, 0, 0, 0);
+    transition: all .2s ease;
+}
+
+#taskbar button.active {
+    background-color: @color8;
+    border-bottom: 2px solid @color11;
+    border-top: 2px solid rgba(0, 0, 0, 0);
+    transition: all .5s ease;
+}
+
+#taskbar button:hover {
+    background-color: @color8;
+    border-bottom: 2px solid @color11;
+    border-top: 2px solid rgba(0, 0, 0, 0);
+    transition: all .2s ease;
+}
+
+#workspaces {
+  padding: 6px 14px 6px 10px;
+}
+
+#workspaces button {
+    /*all: unset;*/
+    padding: 0px 2px;
+    margin: 0 3px;
+    color: alpha(@color11,.4);
+    transition: all .4s ease;
+    /*min-width: 15px;*/
+    /*background-color: @surface-light;*/
+    border-radius: 15px;
+}
+
+#workspaces button:hover {
+    color:rgba(0,0,0,0);
+    border: none;
+    text-shadow: 0px 0px 1.5px rgba(0, 0, 0, .5);
+    transition: all .2s ease;
+}
+
+#workspaces button.active {
+    color: @color11;
+    border: none;
+    /*min-width: 40px;*/
+    text-shadow: 0px 0px 2px rgba(0, 0, 0, .5);
+}
+#workspaces button.empty {
+    color: rgba(0,0,0,0);
+    border: none;
+    text-shadow: 0px 0px 1.5px rgba(0, 0, 0, .2);
+}
+#workspaces button.empty:hover {
+    color: rgba(0,0,0,0);
+    border: none;
+    text-shadow: 0px 0px 1.5px rgba(0, 0, 0, .5);
+    transition: all 1s ease;
+}
+#workspaces button.empty.active {
+    color: @color11;
+    border: none;
+    text-shadow: 0px 0px 2px rgba(0, 0, 0, .5);
+}
+
+#pulseaudio-slider trough {
+    min-height: 10px;
+    min-width: 80px;
+    border-radius: 5px;
+    background-color: @color0;
+}
+
+#pulseaudio-slider highlight {
+    min-width: 0px;
+    border-radius: 5px;
+    background-color: @color11;
+}
+
+#tray menu {
+    background-color: @background;
+}
+
+#clock {
+    padding-right: 0;
+}
+
+#privacy * {
+    color: @color1;
+    padding: 0;
+    padding-left: 4px;
+}

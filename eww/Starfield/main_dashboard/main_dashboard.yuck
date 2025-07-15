@@ -1,0 +1,155 @@
+; The "main" dashboard, it contains some informations about the system
+; and a music player.
+(defwindow generic_dashboard
+  :geometry (geometry :x "20" :y "0"
+              :width "10px" :height "10px"
+              :anchor "right center")
+  :monitor "0"
+  :stacking "bg"
+  :exclusive false
+  (generic_dashboard)
+)
+
+(defwidget generic_dashboard []
+  (box :class "generic-dashboard"
+    :space-evenly false
+    :orientation "h"
+    (box :class "gd-l-col"
+      :space-evenly false
+      :orientation "v"
+      :spacing 10
+      (gd_header)
+      (gd_timecard)
+      (gd_monitcard)
+    )
+    (box :class "gd-r-col"
+      :orientation "h"
+    )
+  )
+)
+; Widgets ---------------------------------------
+
+;; Header (Logo + baseline)
+(defwidget gd_header []
+  (box :class "gd-header"
+    :space-evenly false
+    :orientation "v"
+    :spacing 10
+    (box :class "gd-logo")
+    (label :class "gd-baseline"
+      :show-truncated false
+      :text "For all. Into the Starfield."
+    )
+  )
+)
+
+;; Timecard (Greetings + Time/Weather)
+(defwidget gd_timecard []
+  (box :class "gd-timecard"
+    :space-evenly false
+    :orientation "v"
+    :halign "center"
+    :valign "start"
+    :spacing 2
+    :width 280 ;; optionnal
+    (gd_daytime)
+    (label :show-truncated false :text {time.day_full})
+    (gd_date)
+  )
+)
+
+;; Monitoring card
+(defwidget gd_monitcard []
+  (box :class "gd-monitcard"
+    :space-evenly false
+    :orientation "v"
+    (box :space-evenly true 
+      :orientation "h"
+      (box :space-evenly false
+        :orientation "v"
+        (label :class "gd-destination" :xalign 0 
+          :text "Destination")
+        (label :class "gd-planet" :xalign 0 :text "MOON")
+      )
+      (box :space-evenly false
+        :orientation "v"
+        (label :class "gd-level" :xalign 1 :text "Level")
+        (label :class "gd-level-nb" :halign "end" :xalign 0.5 :text "87")
+      )
+    )
+    (box :class "gd-monitbar-container"
+      :space-evenly false
+      :orientation "v"
+      :spacing 4
+      (gd_monitbar :metric "CPU" :value "12")
+      (gd_monitbar :metric "RAM" 
+        :value "${ram_used} / ${ram_total}")
+      (gd_monitbar :metric "Uptime" 
+        :value "${uptime_h} hours ${uptime_m} min")
+    )
+    (label :class "gd-resource-label" :xalign 0 
+      :text "Resources")
+    (box :space-evenly false
+      :orientation "h"
+      :spacing 4
+      (gd_resource :name "Te")
+      (gd_resource :name "Cu")
+      (gd_resource :name "Au")
+      (gd_resource :name "Al")
+      (gd_resource :name "Fe")
+    )
+  )
+)
+
+; Sub-widgets -----------------------------------
+(defwidget gd_daytime []
+  (box
+    (label :show-truncated false
+      :text {
+      time.hour >= 2 && time.hour <= 4 ? "Early Morning" :
+      time.hour <= 5 ? "Dawn" :
+      time.hour >= 6 && (time.hour <= 8 && time.min <= 59) ? "Morning" :
+      time.hour >= 9 && (time.hour <= 11 && time.min <= 59) ? "Late Morning" :
+      time.hour == 12 && time.min <= 29 ? "Midday" :
+      time.hour >= 12 && time.hour <= 16 ? "Afternoon" :
+      time.hour > 16 && time.hour <= 17 ? "Late Afternoon" :
+      (time.hour >= 17 && time.min <= 1) || (time.hour <= 18 && time.min <= 20) 
+      ? "Early Evening" :
+      time.hour >= 18 && time.hour <= 19 ? "Dusk" :
+      time.hour > 19 && time.hour <= 21 ? "Late Evening" :
+      time.hour > 21 ? "Night" : "Midnight"}
+    )
+  )
+)
+
+(defwidget gd_date []
+  (box :space-evenly false 
+    :orientation "h"
+    :halign "center"
+    :spacing 5
+    (label :show-truncated false :text {time.day_short})
+    (label :show-truncated false :text {time.month_full})
+    (label :show-truncated false :text {time.year})
+    (label :show-truncated false :text "-")
+    (label :show-truncated false :text {time.hour})
+    (label :text ":")
+    (label :show-truncated false :text {time.min})
+    (label :text ":")
+    (label :show-truncated false :text {time.sec})
+  )
+)
+
+(defwidget gd_monitbar [metric value]
+  (box :class "gd-monitbar"
+    :space-evenly true 
+    :halign "fill"
+    (label :class "gd-monitbar-metric" :xalign 0 :text "${metric}")
+    (label :class "gd-monitbar-value" :xalign 1 :text "${value}")
+  )
+)
+
+(defwidget gd_resource [name]
+  (box :class "gd-resource gd-resource-${name}"
+    (label :text "${name}")
+  )
+)

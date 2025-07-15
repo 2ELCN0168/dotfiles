@@ -1,0 +1,261 @@
+//vim: ts=2:sw=2:sts=2:
+{
+  "layer": "bottom",
+  "position": "top",
+  "margin-right": 30,
+  "margin-left": 30,
+  "margin-top": 10,
+  "reload_style_on_change": true,
+
+  "modules-left": [
+    "group/menu",
+    "mpris",
+    "wlr/taskbar"
+  ],
+
+  "modules-center": [
+    "hyprland/workspaces"
+  ],
+
+  "modules-right": [
+    "pulseaudio",
+    "pulseaudio/slider",
+    "cava",
+    "bluetooth",
+    "cpu",
+    "memory",
+    "custom/pacman",
+    "network",
+    "idle_inhibitor",
+    "battery",
+    "clock",
+    "privacy"
+  ],
+
+  "group/menu": {
+      "orientation": "horizontal",
+      "drawer": {
+          "transition-duration": 500,
+          "click-to-reveal": true,
+          "transition-left-to-right": true 
+      },
+      "modules": [
+          "custom/logo",
+          "custom/control-center",
+          "custom/powermenu"
+      ]
+  },
+
+  "custom/logo": {
+      "format": "󰣇 ",
+      "tooltip": false 
+  },
+
+  "custom/control-center": {
+      "format": " ",
+      "tooltip-format": "Open control center"
+  },
+
+  "custom/powermenu": {
+      "format": "⏻ ",
+      "tooltip-format": "Open powermenu"
+  },
+
+  "mpris": {
+    "dynamic-order": ["artist", "title", "position"],
+    "dynamic-importance-order": ["title", "position", "artist"], 
+	"format": "{player_icon} {dynamic}",
+	"format-paused": "{status_icon} <i>{title}</i>",
+    "dynamic-len": 40,
+    "dynamic-separator": "  ",
+    "interval": 1,
+    "ellipsis": "…",
+	"player-icons": {
+		"default": "",
+        "spotify": "",
+        "brave": "",
+        "chrome": "",
+        "chromium": "",
+        "firefox": "󰈹",
+		"mpv": ""
+	},
+	"status-icons": {
+		"paused": ""
+	}
+	// "ignored-players": ["firefox"]
+  },
+
+  "wlr/taskbar": {
+    "format": "{icon}",
+    "icon-size": 14,
+    "icon-theme": "Numix-Circle",
+    "tooltip-format": "{title}",
+    "on-click": "activate",
+    "on-click-middle": "close",
+    "ignore-list": [
+       "Alacritty",
+       "kitty"
+    ],
+    "app_ids-mapping": {
+      "firefoxdeveloperedition": "firefox-developer-edition"
+    },
+    "rewrite": {
+        "Firefox Web Browser": "Firefox",
+        "Foot Server": "Terminal"
+    }
+},
+
+  "hyprland/workspaces": {
+    "format": "{icon}",
+    "format-icons": {
+      "active": "",
+      "default": "",
+      "empty": ""
+    },
+    "persistent-workspaces": {
+      "*": 5
+    }
+  },
+
+  "pulseaudio": {
+    "format": "{volume}% {icon}",
+    "format-bluetooth": "{volume}% {icon} ",
+    "format-muted": "",
+    "format-icons": {
+        "alsa_output.pci-0000_00_1f.3.analog-stereo": "",
+        "alsa_output.pci-0000_00_1f.3.analog-stereo-muted": "",
+        "headphone": "",
+        "hands-free": "󱡏",
+        "headset": "",
+        "phone": "",
+        "phone-muted": "",
+        "portable": "",
+        "car": "",
+        "default": ["", ""]
+    },
+    "scroll-step": 1,
+    "on-click": "pavucontrol",
+    "ignored-sinks": ["Easy Effects Sink"]
+  },
+
+  "pulseaudio/slider": {
+    "min": 0,
+    "max": 100,
+    "orientation": "horizontal"
+  },
+
+  "custom/pacman": {
+    "format": "󰆧 {}",
+    "interval": 30,   
+    "exec": "checkupdates | wc -l",
+    "exec-if": "exit 0",
+    "signal": 8,
+    "tooltip": true,
+    "tooltip-format": "{} updates available..."
+  },
+
+  "network": {
+    "format-wifi": " ",
+    "format-ethernet":" ",
+    "format-disconnected": " ",
+    "tooltip-format-disconnected": "Error",
+    "tooltip-format-wifi": "{essid} ({signalStrength}%)  ",
+    "tooltip-format-ethernet": "{ifname} 🖧  ",
+    "on-click": "kitty nmtui"
+  },
+
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+        "activated": "󰐂 ",
+        "deactivated": "󱩜 "
+    },
+    "tooltip-format-activated": "Caffeine drunk!",
+    "tooltip-format-deactivated": "Give me caffeine?"
+  },
+
+  // Need to build with cava support (paru -S waybar-cava does it)
+  "cava": {
+    "framerate": 240,
+    "autosens": 1,
+    "sensitivity": 1,
+    "bars": 3,
+    "lower_cutoff_freq": 50,
+    "higher_cutoff_freq": 10000,
+    "method": "pipewire",
+    "source": "auto",
+    "stereo": false,
+    "reverse": false,
+    "bar_delimiter": 0,
+    "monstercat": true,
+    "waves": true,
+    "noise_reduction": 0.50,
+    "input_delay": 2,
+    "format-icons" : ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█" ]
+  },
+
+  "bluetooth": {
+	"format": " {status}",
+	"format-disabled": "󰂲 ", // an empty format will hide the module
+	"format-connected": " {num_connections}",
+	"tooltip-format": "{controller_alias}\t{controller_address}",
+	"tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+	"tooltip-format-enumerate-connected": "{device_alias}\t{device_address}"
+  },
+
+  "cpu": {
+    "interval": 5,
+    "format": "󰍛 {usage}%",
+    "max-length": 10
+  },
+
+  "memory": {
+    "interval": 5,
+    "format": " {}%",
+    "max-length": 10
+  },
+
+  "battery": {
+    "interval": 60,
+    "states": {
+        "warning": 30,
+        "critical": 15
+    },
+    "format": "{icon}",
+    "tooltip-format": "{capacity}% {icon} - {timeTo}",
+    "format-icons": ["♥♥♥♥", "♥♥♥", "♥♥", "♥", ""],
+    "max-length": 25
+  },
+
+  "clock": {
+    "interval": 1,
+    "format": "{:%H:%M:%S}",
+    "max-length": 25,
+    "tooltip": false
+  },
+
+  "privacy": {
+	"icon-spacing": 4,
+	"icon-size": 18,
+	"transition-duration": 250,
+	"modules": [
+		{
+			"type": "screenshare",
+			"tooltip": true,
+			"tooltip-icon-size": 24
+		},
+		{
+			"type": "audio-out",
+			"tooltip": true,
+			"tooltip-icon-size": 24
+		},
+		{
+			"type": "audio-in",
+			"tooltip": true,
+			"tooltip-icon-size": 24
+		}
+	]
+  }
+}
+
+

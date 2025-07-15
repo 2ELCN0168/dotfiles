@@ -1,0 +1,166 @@
+.top-bar {
+  background: $background;
+  border-radius: 2px;
+  // padding: 0 20px;
+  margin: {
+    top: 0;
+    right: 20px;
+    bottom: 0px;
+    left: 20px;
+  }
+  font: {
+    family: 'JetBrainsMonoNL Nerd Font';
+    weight: 600;
+  }
+  color: $foreground;
+}
+
+// Common values --------------------------------
+@mixin tb-size-min-icon {
+  min: {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+@mixin tb-bg-common-1 {
+  background: {
+    repeat: no-repeat;
+    position: center;
+  }
+}
+
+// Widgets --------------------------------------
+.tb-left-section,
+.tb-center-section,
+.tb-right-section {
+  background: $background;
+  padding: 0 20px;
+}
+
+// Powermenu
+.tb-powermenu {
+  @include tb-size-min-icon;
+  background: {
+    image: url('/home/eluciani/.config/eww/Chroma/assets/color4/archlinux.svg');
+    position: left;
+    size: 15px;
+    repeat: no-repeat;
+  }
+}
+
+.tb-pwr-button-first {
+  margin-left: 25px;
+}
+
+.tb-pwr-button {
+  @include tb-size-min-icon;
+  @include tb-bg-common-1;
+  background-size: 14px;
+  padding: 0 4px;
+}
+
+// Labelled metric
+.tb-metric {
+  @include tb-size-min-icon;
+  @include tb-bg-common-1;
+  background-size: 14px;
+}
+
+// Circular metric
+.tb-circ-metric {
+  background-color: $color0;
+  color: $color3;
+  .tb-circ-metric-icon {
+    @include tb-bg-common-1;
+    background-size: 12px;
+    padding: 10px;
+    min: {
+      width: 10px;
+      height: 10px;
+    }
+  }
+}
+
+// Metric card
+.tb-metric-card {
+  background: $background;
+  margin-right: 20px;
+  margin-top: 5px;
+  border-radius: 2px;
+  padding: 15px;
+  font: {
+    family: 'Ailerons';
+    weight: 900;
+  }
+  color: $foreground;
+  min: {
+    width: 200px;
+    height: 200px;
+  }
+  .tb-metric-card-circ {
+    background: $color0;
+    color: $color3;
+    .tb-metric-card-circ-icon {
+      @include tb-bg-common-1;
+      background-size: 25px;
+      min: {
+        width: 45px;
+        height: 45px;
+      }
+      padding: 10px;
+    }
+  }
+  .tb-metric-card-label {
+    color: $foreground;
+    font: {
+      family: "Ailerons";
+      size: 40px;
+      weight: 900;
+    }
+    letter-spacing: -6px;
+  }
+  .tb-metric-card-graph-values {
+    color: $foreground;
+    font: {
+      family: 'WDXL Lubrifont SC';
+      size: 10px;
+      weight: 900;
+    }
+  }
+  .tb-metric-card-graph-ct {
+    border: {
+      bottom: 1px solid $color3;
+      left: 1px solid $color3;
+    }
+    margin: 20px 20px 20px 10px;
+    .tb-metric-card-graph {
+      color: $color3;
+      background-color: $color0;
+    }
+  }
+  .tb-metric-card-graph-title {
+    font-size: 16px;
+    letter-spacing: -2px;
+  }
+}
+
+// Time
+.tb-time {
+  font: {
+    family: "WDXL Lubrifont SC";
+    size: 18px;
+  }
+  letter-spacing: 1px;
+}
+
+.tbc-time-card {
+  padding: 15px;
+  background: $background;
+  margin: {
+    top: 15px;
+    right: 20px;
+  }
+}
+
+

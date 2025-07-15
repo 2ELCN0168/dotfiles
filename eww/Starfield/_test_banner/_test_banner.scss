@@ -1,0 +1,23 @@
+._tb-box {
+  * {
+    all: unset;
+  }
+  min: {
+    width: 100px;
+    height: 70px;
+  }
+}
+
+$colors: (
+  "1": $color1,
+  "2": $color2,
+  "3": $color3,
+  "4": $color4,
+  "5": $color5
+);
+
+@each $name, $color in $colors {
+  ._tb-box-#{$name} {
+    background-color: $color;
+  }
+}

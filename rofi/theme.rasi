@@ -1,0 +1,12 @@
+@theme "~/.cache/wal/colors-rofi-dark.rasi"
+
+* {
+    main-bg:            @background;
+    main-fg:            @foreground;
+    main-br:            @active-background;
+    main-ex:            @active-background;
+    select-bg:          @active-background;
+    select-fg:          @active-foreground;
+    separatorcolor:     transparent;
+    border-color:       transparent;
+}

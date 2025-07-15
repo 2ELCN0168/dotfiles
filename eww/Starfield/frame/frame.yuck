@@ -1,0 +1,40 @@
+(defwindow frame 
+  :geometry (geometry :x "0" :y "0"
+              :width "10px" :height "10px"
+              :anchor "center")
+  :monitor "0"
+  :stacking "bg"
+  :exclusive false
+  (frame)
+)
+
+(defwidget frame []
+  (box 
+    :space-evenly false
+    :halign "start"
+    :valign "start"
+    (fr_top_banner)
+    (fr_btm_logo)
+  )
+)
+
+(defwidget fr_top_banner []
+  (box :class 'fr-top-banner'
+    :space-evenly false
+    :halign "start"
+    (box :class "fr-tb-ribbon"
+      :space-evenly false
+      (box :class "fr-tb-category"
+      )
+    )
+  )
+)
+
+(defwidget fr_btm_logo []
+  (box :class "fr-bl-ribbon"
+    :space-evenly false
+    :halign "end"
+    :valign "end"
+    (box :class "fr-bl-logo")
+  )
+)

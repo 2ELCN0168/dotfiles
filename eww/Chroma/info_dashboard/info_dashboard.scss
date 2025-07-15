@@ -1,0 +1,89 @@
+.info-dashboard {
+  color: $foreground;
+}
+
+// Common properties ----------------------------
+@mixin font-common {
+  font: {
+    family: "Ailerons";
+    weight: 900;
+  }
+}
+
+@mixin background-common {
+  background: {
+    position: center;
+    repeat: no-repeat;
+  }
+}
+
+// Widgets --------------------------------------
+
+// Date 
+.id-date {
+  @include font-common;
+  font-size: 18px;
+  letter-spacing: -3px;
+  padding-left: 10px;
+}
+
+// Weather (33°C SUNNY)
+.id-weather {
+  @include font-common;
+  font-size: 64px;
+  margin-top: 80px;
+  letter-spacing: -5px;
+}
+
+// Wake up, Tenno!
+.id-baseline {
+  @include font-common;
+  font-size: 22px;
+  letter-spacing: -5px;
+}
+
+.id-baseline-logo {
+  @include background-common;
+  background: {
+    image: url('/home/eluciani/.config/eww/Chroma/assets/icons/warframe_lotus.svg');
+    size: contain;
+  }
+  min: {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+// Metrics circle
+.id-circ {
+  background-color: $color0;
+  color: $color5;
+  .id-circ-label {
+    background-color: $background;
+    border-radius: 100%;
+    padding: 20px;
+    @include background-common;
+    background-size: 20px;
+    min: {
+      width: 10px;
+      height: 10px;
+    }
+  }
+}
+
+// Separator
+.id-divider {
+  margin: {
+    top: 20px;
+    left: 10px;
+  }
+  @include background-common;
+  background: {
+    image: url('/home/eluciani/.config/eww/Chroma/assets/icons/divider_orokin_text.svg');
+    size: contain;
+  }
+  min: {
+    width: 300px;
+    height: 40px;
+  }
+}

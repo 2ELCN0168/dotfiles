@@ -1,0 +1,70 @@
+(defwindow info_dashboard
+  :geometry (geometry :x "15" :y "0" :anchor "left center"
+              :width "10px" :height "10px")
+  :stacking "bg"
+  :monitor "0"
+  :exclusive false
+  (info_dashboard)
+)
+
+; Widgets
+(defwidget info_dashboard []
+  (box :class "info-dashboard"
+    :space-evenly false
+    :orientation "v"
+    :halign "start"
+    :valign "start"
+    (overlay
+        (id_weather)
+        (id_date :halign "start" :valign "start")
+    )
+    (box :space-evenly false 
+      :orientation "h"
+      :spacing 15
+      (box :width 0) ; Placeholder to maintain a good margin
+      (id_circ_metric :value "${ram_used_percent}" :icon "ram_rev")
+      (id_circ_metric :value "${cpu_used_percent}" :icon "cpu_rev")
+      (id_circ_metric :value "${swap_used_percent}" :icon "swap_rev")
+      (box :class "id-baseline-logo")
+      (label :class "id-baseline" 
+        :show-truncated false 
+        :text "Wake up, Tenno!"
+      )
+    )
+    (box :class "id-divider" :halign "start" :space-evenly false)
+  )
+)
+
+; Sub-Widgets
+;; Date
+(defwidget id_date []
+  (box :class "id-date"
+    :space-evenly false
+    :spacing 5
+    (label :show-truncated false :text {time.day_full})
+    (label :show-truncated false :text {time.day_short})
+    (label :show-truncated false :text {time.month_full})
+    (label :show-truncated false :text {time.year})
+  )
+)
+
+;; Weather
+(defwidget id_weather []
+  (box :class "id-weather"
+    :halign "start"
+    (label :show-truncated false :text "${weather}")
+  )
+)
+
+(defwidget id_circ_metric [value icon]
+  (box :space-evenly false
+    (circular-progress :class "id-circ" 
+      :value "${value}" 
+      :thickness 6 
+      :start-at 50 
+      (box :space-evenly false :class "id-circ-label" 
+        :style "background-image: url('/home/eluciani/.config/eww/Chroma/assets/icons/${icon}.svg');"
+      )
+    )
+  )
+)

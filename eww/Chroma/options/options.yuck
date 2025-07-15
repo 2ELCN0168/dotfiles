@@ -1,0 +1,27 @@
+(defwindow options
+  :geometry (geometry :x "30" :y "30"
+              :width "10px" :height "10px"
+              :anchor "bottom left")
+  :monitor "0"
+  :stacking "bg"
+  :exclusive false
+  (options)
+)
+
+(defwidget options []
+  (box
+    :space-evenly false
+    :orientation "h"
+    :halign "start"
+    :valign "center"
+    (opt_box :icon "sq_enter_bl")
+  )
+)
+
+(defwidget opt_box [icon]
+  (eventbox :class "opt-box"
+    (box :class "opt-box-icon"
+      :style "background-image: url('/home/eluciani/.config/eww/Chroma/assets/icons/${icon}.svg');"
+    )
+  )
+)

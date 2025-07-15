@@ -1,0 +1,35 @@
+; "Constant" variables
+(defvar username_pretty "Enzo")
+(defpoll username :initial "Agent 14" :interval "2h" `id -nu`)
+(defpoll hostname :initial "cpz-01" :interval "8h" `cat /etc/hostname`)
+(defpoll ram_total :initial "N/A" :interval "8h" `free --si -h | awk '/^Mem:/ { print $2 }'`)
+
+; Common variables
+(defpoll net_signal :initial "N/A" :interval "60s"
+  `nmcli -t -f SIGNAL,ACTIVE d w | awk -F ':' '{ if ($2 == 'yes') print $1 }'`)
+(defpoll net_ssid :initial "N/A" :interval "10s" 
+  `nmcli -t -f STATE,CONNECTION d s | \
+  awk -F ':' '{ if ($1 == "connected") print $2 }'`)
+(defpoll ram_used :initial "N/A" :interval "10s" `free --si -h | awk '/^Mem:/ { print $3 }'`)
+(defpoll uptime_h :initial "N/A" :interval "1h" `uptime -p | awk '{ $1=$1 ; print $2 }'`) 
+(defpoll uptime_m :initial "N/A" :interval "1min" `uptime -p | awk '{ $1=$1 ; print $4 }'`)
+
+(defpoll time :interval "1s" :initial `date +'{
+  "year": "%Y", 
+  "month_full": "%B", 
+  "month_short": "%m", 
+  "day_full": "%A", 
+  "day_short": "%d", 
+  "hour": "%H", 
+  "min": "%M", 
+  "sec": "%S"}'`
+  `date +'{
+  "year": "%Y", 
+  "month_full": "%B", 
+  "month_short": "%m", 
+  "day_full": "%A", 
+  "day_short": "%d", 
+  "hour": "%H", 
+  "min": "%M", 
+  "sec": "%S"}'`
+)

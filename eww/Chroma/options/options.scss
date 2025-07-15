@@ -1,0 +1,16 @@
+* {
+  all: unset;
+}
+
+.opt-box {
+  background-color: #1c1c1c;
+  .opt-box-icon {
+    background: {
+      repeat: no-repeat;
+      size: 20px;
+      position: center;
+    }
+    min-width: 50px;
+    min-height: 50px;
+  }
+}

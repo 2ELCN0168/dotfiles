@@ -1,0 +1,150 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+    "logo": {
+        "type": "kitty-icat",
+        "source": "~/.config/fastfetch/background.png",
+        "padding": {
+            "top": 0,
+            "left": 4,
+            "right": 1
+        }
+    },
+    "display": {
+        "separator": "",
+        "color": {
+            "keys": "blue",
+            "title": "cyan"
+        },
+        "key": {
+            "width": 17,
+            "type": "string"
+        },
+        "constants": [
+            "───────────────────────────────",
+            "───────────",
+            "\u001b[48D",
+            "\u001b[31C",
+            "\u001b[33C",
+            "\u001b[7C",
+            "\u001b[2C",
+            "\u001b[32C",
+            "\u001b[28C"
+        ],
+        "percent": {
+            // 1=number, 2=bar, 3=both, 9=colored number
+            "type": 9,
+            "color": {
+                "green": "green",
+                "yellow": "light_yellow",
+                "red": "light_red"
+            }
+        }
+    },
+    // ------------------------------------------
+    "modules": [
+        {
+            "type": "title",
+            "key": "┌{$2}┬{$1}┐",
+            "format": "{#keys} {1} @ {2} " 
+        },
+        {
+            "type": "os",
+            "key": "│{$7}{icon}  \u001b[s{sysname} │{$4}│",
+            "format": "{3} ({#title}{12}{#output})"
+        },
+        {
+            "type": "custom",
+            "key": "├{$2}┴{$1}┤",
+            "format": "{#keys} Hardware "
+        },
+        {
+            "type": "memory",
+            "key": "│{#title}{$7}{icon}  RAM{#keys}  {$5}│",
+            "format": "{1} on {2} ({3})"
+        },
+        {
+            "type": "cpu",
+            "key": "│{#title}{$7}{icon}  CPU{#keys}  {$5}│",
+            "format": "{1} ({#title}{4}{#output})"
+        },
+        {
+            "type": "gpu",
+            "key": "│{#title}{$7}{icon}  GPU{#keys}  {$5}│",
+            "format": "{2}"
+        },
+        {
+            "type": "custom",
+            "key": "├{$2}─{$1}┤",
+            "format": "{#keys} System "
+        },
+        {
+            "type": "shell",
+            "key": "│{$7}{icon}  Shell  {$4}│",
+            "format": "{6} ({#title}{4}{#output})"
+        },
+        {
+            "type": "terminal",
+            "key": "│{$7}{icon}  Term.  {$4}│",
+            "format": "{5} ({#title}{6}{#output})"
+        },
+        {
+            "type": "terminalfont",
+            "key": "│{$7}{icon}  Font  {$8}│",
+            "format": "{2}"
+        },
+        {
+            "type": "packages",
+            "key": "│{$7}{icon}  Packages  {$9}│",
+            "format": "{2} ({#title}pacman{#output}), {44} ({#title}flatpak{#output})"
+        },
+        {
+            "type": "custom",
+            "key": "├{$2}─{$1}┤",
+            "format": "{#keys} Bip boop "
+        },
+        {
+            "type": "command",
+            "keyIcon": "",
+            "key": "│{#title}{$7}{icon}  Bash{#keys}  {$8}│",
+            "text": "bash --version | awk -F ' ' '/version/ { print $4 ; exit }'",
+            "format": "{1}"
+        },
+        {
+            "type": "command",
+            "keyIcon": "󰊢",
+            "key": "│{#title}{$7}{icon}  Git{#keys}  {$5}│",
+            "text": "git version | tr -d [:lower:] | tr -d  [:space:]",
+            "format": "{1}"
+        },
+        {
+            "type": "command",
+            "keyIcon": "",
+            "key": "│{#title}{$7}{icon}  Clang{#keys}  {$4}│",
+            "text": "clang --version | awk -F ' ' '/version/ { print $3 }'",
+            "format": "{1}"
+        },
+        {
+            "type": "command",
+            "keyIcon": "",
+            "key": "│{#title}{$7}{icon}  Rust{#keys}  {$8}│",
+            "text": "rustc --version | awk -F ' ' '{ print $2 }'",
+            "format": "{1}"
+        },
+        {
+            "type": "custom",
+            "key": "└{$2}─{$1}┘",
+            "format": ""
+        },
+        "break",
+        {
+            "type": "custom",
+            "key": "\u001b[30m𜵼𜶋𜶪𜶑𜷎\u001b[31m𜵧𜴢𜶗𜶼𜶢\u001b[32m𜶞𜵥𜶟𜷐𜵬\u001b[33m𜶹𜵑𜴙𜷋𜴰\u001b[34m𜶱𜶋𜴟𜴟𜷂\u001b[35m𜶪𜴨𜷄𜷍𜴭\u001b[36m𜶔𜷋𜶘𜶶𜵯\u001b[37m𜶆𜶽𜶤𜶖𜷒",
+            "format": ""
+        },
+        {
+            "type": "custom",
+            "key": "\u001b[90m𜶨𜵦𜶗𜶣𜶆\u001b[91m𜶽𜶤𜶖𜷒𜷈\u001b[92m𜶠𜷑𜶹𜵘𜵭\u001b[93m𜶋𜴤𜶴𜷖𜶵\u001b[94m𜴡𜶿𜶄𜶔𜷋\u001b[95m𜶧𜶘𜶶𜵯𜶯\u001b[96m𜶜𜶑𜷂𜶒𜶩\u001b[97m𜵫𜶷𜷔𜶱𜷗",
+            "format": ""
+        }
+    ]
+}

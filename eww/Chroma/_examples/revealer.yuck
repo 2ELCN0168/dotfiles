@@ -1,0 +1,45 @@
+(defwindow ex_reveal
+  :geometry (geometry :x "0" :y "10" :anchor "top center"
+              :width "900" :height "30")
+  :stacking "bg"
+  :exclusive true
+  :monitor "0"
+  (ex_reveal)
+)
+
+(defvar ex_reveal1 false)
+
+(defwidget ex_reveal []
+  (box :space-evenly false
+    (er_powermenu)
+  )
+)
+
+(defwidget er_powermenu []
+  (eventbox 
+    :onhover "eww -c . update ex_reveal1=true"
+    :onhoverlost "eww -c . update ex_reveal1=false"
+    (box :class "boox"
+      :space-evenly false
+      (revealer :transition "slideleft"
+        :reveal ex_reveal1
+        (box :space-evenly false
+          :spacing 5
+         (box1 :classe "bix") 
+         (box1) 
+         (box1) 
+         (box1) 
+         (box1) 
+         (box1) 
+         (box1) 
+        )
+      )
+    )
+  )
+)
+
+(defwidget box1 [?classe]
+  (box :class "box1 ${classe}" 
+    :style "background-color: blue;"
+  )
+)

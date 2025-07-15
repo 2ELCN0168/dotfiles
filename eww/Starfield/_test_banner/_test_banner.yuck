@@ -1,0 +1,25 @@
+; Testing banner. Composed of the constellation color blocks.
+(defwindow _test_banner
+  :geometry (geometry :x "0" :y "0"
+              :width "10px" :height "10px"
+              :anchor "bottom center")
+  :monitor "0"
+  :exclusive false
+  :stacking "bg"
+  (_test_banner)
+)
+
+(defwidget _test_banner []
+  (box :class "_tb"
+    :space-evenly false
+    :orientation "h"
+    :halign "start"
+    :valign "end"
+    :spacing 0
+    (box :class "_tb-box _tb-box-1")
+    (box :class "_tb-box _tb-box-2")
+    (box :class "_tb-box _tb-box-3")
+    (box :class "_tb-box _tb-box-4")
+    (box :class "_tb-box _tb-box-5")
+  )
+)

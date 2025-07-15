@@ -1,0 +1,131 @@
+// Global
+.generic-dashboard {
+  color: $color0;
+  font: {
+    family: 'NBArchitekt';
+    weight: 400;
+    size: 12px;
+  }
+}
+
+// Common properties
+@mixin radius-light {
+  border-radius: 2px;
+}
+
+@mixin card-bg {
+  // background-color: $color5;
+  background-color: rgba(33, 49, 79, 0.9);
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.4) inset;
+}
+
+@mixin bg-common {
+  background: {
+    position: center;
+    repeat: no-repeat;
+  }
+}
+
+@mixin font-bold {
+  font-weight: 900;
+}
+
+// Common values
+$border-thin-light: 1px solid $color4;
+$logo: "./assets/logos/constellation_1.svg";
+// $logo: "./assets/logos/ryujin_industries_1.svg";
+
+// Widgets --------------------------------------
+
+// Header
+.gd-header {
+  .gd-logo {
+    @include bg-common;
+    background: {
+      image: url($logo);
+      size: 80px;
+    }
+    min: {
+      width: 80px;
+      height: 80px;
+    }
+  }
+  .gd-baseline {
+    color: $color6;
+    @include font-bold;
+  }
+}
+
+// Time card
+.gd-timecard {
+  @include radius-light;
+  @include card-bg;
+  padding: 10px;
+}
+
+// Monitoring card
+.gd-monitcard {
+  @include card-bg;
+  @include radius-light;
+  padding: 10px;
+  .gd-planet {
+    font-size: 28px;
+  }
+  .gd-destination .gd-level {
+    font-size: 16px;
+  }
+  .gd-level-nb {
+    background-color: $color3;
+    color: $color7;
+    font-size: 18px;
+    min: {
+      width: 28px;
+      height: 28px;
+    }
+  }
+  .gd-monitbar-container {
+    padding: 15px 0;
+    margin: 15px 0;
+    border: {
+      top: $border-thin-light;
+      bottom: $border-thin-light;
+    }
+    .gd-monitbar {
+      border: $border-thin-light;
+      margin: 0 10px;
+      .gd-monitbar-metric {
+        padding: 2px 0 2px 6px;
+        background-color: $color4;
+      }
+      .gd-monitbar-value {
+        padding-right: 6px;
+      }
+    }
+  }
+}
+
+// Resources boxes
+.gd-resource-label {
+  font-size: 16px;
+  padding-bottom: 8px;
+}
+.gd-resource {
+  min: {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+$color :(
+  "Te": $color1,
+  "Cu": $color2,
+  "Au": $color3,
+  "Al": $color4,
+  "Fe": $color5
+);
+
+@each $name, $value in $color {
+  .gd-resource-#{$name} {
+    background-color: $value;
+  }
+}

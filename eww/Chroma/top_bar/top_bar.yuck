@@ -1,0 +1,263 @@
+(defwindow top_bar 
+  :geometry (geometry :x "0" :y "10" :anchor "top center"
+              :width "1930" :height "40")
+  :stacking "bg"
+  :exclusive true
+  :monitor "0"
+  (top_bar :plain_bar tb_plain_bar :plain_sections tb_plain_sections)
+)
+
+(defwindow top_bar_cards
+  :geometry (geometry :x "0" :y "0" :anchor "top center"
+              :width "1930" :height "40")
+  :stacking "bg"
+  :exclusive false
+  :monitor "0"
+  (top_bar_cards)
+)
+
+(defvar reveal1 false)
+(defvar tb_ram_card_revealer false)
+(defvar tb_cpu_card_revealer false)
+(defvar tb_swap_card_revealer false)
+(defvar tb_time_card_revealer false)
+(defvar tb_plain_bar "//background: transparent;")
+(defvar tb_plain_sections "//background: transparent;")
+; (deflisten tb_workspaces "../_scripts/hyprland_workspaces.sh")
+
+; Widget ----------------------------------------
+(defwidget top_bar [plain_bar plain_sections]
+  (box :class "top-bar"
+    :space-evenly true
+    :style "${plain_bar}"
+    (box :class "tb-left-section"
+      :space-evenly false
+      :halign "start"
+      :style "${plain_sections}"
+      (tb_powermenu)
+    )
+    (box :class "tb-center-section"
+      :space-evenly false
+      :halign "center"
+      :style "${plain_sections}"
+      ; "Enzo LUCIANI"
+      (tb_workspaces)
+    )
+    (box :class "tb-right-section"
+      :space-evenly false
+      :spacing 15
+      :halign "end"
+      :style "${plain_sections}"
+      ; (tb_metric :value cpu_used_percent :icon "cpu_rev" :add "%")
+      (tb_circ_metric :value ram_used_percent 
+        :icon "ram_rev"
+        :reveal_var "tb_ram_card_revealer"
+      )
+      (tb_circ_metric :value cpu_used_percent 
+        :icon "cpu_rev"
+        :reveal_var "tb_cpu_card_revealer"
+      )
+      (tb_circ_metric :value swap_used_percent 
+        :icon "swap_rev"
+        :reveal_var "tb_swap_card_revealer"
+      )
+      ; (tb_circ_metric :value cpu_used_percent :icon "cpu_rev")
+      ; (tb_metric :value ram_used_percent :icon "ram_rev" :add "%")
+      (tb_metric :value checkupdates :icon "box_rev")
+      (tb_time)
+    )
+  )
+)
+
+(defwidget top_bar_cards []
+  (box :space-evenly false
+    :halign "end"
+    (overlay
+      (tb_metric_card 
+        :reveal tb_ram_card_revealer
+        :icon "ram_rev"
+        :value ram_used_percent 
+        :title "RAM"
+      )
+      (tb_metric_card
+        :reveal tb_cpu_card_revealer
+        :icon "cpu_rev"
+        :value cpu_used_percent
+        :title "CPU"
+      )
+      (tb_metric_card
+        :reveal tb_swap_card_revealer
+        :icon "swap_rev"
+        :value swap_used_percent
+        :title "SWAP"
+      )
+      (tbc_time_card :revealer tb_time_card_revealer)
+    )
+  )
+)
+
+; Sub-widgets ------------------------------------
+(defwidget tb_powermenu []
+  (eventbox 
+    :onhover "eww -c . update reveal1=true"
+    :onhoverlost "eww -c . update reveal1=false"
+    (box :class "tb-powermenu"
+      :space-evenly false
+      :halign "start"
+      :valign "center"
+      (revealer :transition "slideleft"
+        :reveal reveal1
+        (box :space-evenly false
+          (tb_pwr_button :_class "tb-pwr-button-first"
+            :action "systemctl poweroff"
+            :icon "power"
+          )
+          (tb_pwr_button :action "systemctl reboot" :icon "reload")
+          (tb_pwr_button :action "hyprctl dispatch exit" :icon "exit")
+          (tb_pwr_button :action "hyprctl dispatch exec -- hyprlock" 
+            :icon "lock"
+          )
+        )
+      )
+    )
+  )
+)
+
+(defwidget tb_pwr_button [?_class action icon]
+  (box :class "tb-pwr-button ${_class}" 
+      :style "background-image: url('/home/eluciani/.config/eww/Chroma/assets/icons/${icon}.svg');"
+    (eventbox
+      :cursor "pointer"
+      :onclick "${action}"
+    )
+  )
+)
+
+;; Workspaces
+(defwidget tb_workspaces []
+  (box :class "workspaces"
+    :space-evenly false
+    :halign "center"
+  )
+)
+
+;; Labelled metric 
+(defwidget tb_metric [value icon ?add]
+  (box :space-evenly false
+    :spacing 5
+    (box :class "tb-metric"
+      :style "background-image: url('/home/eluciani/.config/eww/Chroma/assets/icons/${icon}.svg');")
+    (label :text "${value}${add}")
+  )
+)
+
+;; Circular metric
+(defwidget tb_circ_metric [value icon reveal_var]
+  (box :space-evenly false
+    (eventbox 
+      :onhover "eww -c . update ${reveal_var}=true"
+      :onhoverlost "eww -c . update ${reveal_var}=false"
+      (circular-progress :class "tb-circ-metric" 
+        :value "${value}"
+        :start-at 50
+        :thickness 4
+        (box :class "tb-circ-metric-icon"
+          :space-evenly false
+          :style "background-image: url('/home/eluciani/.config/eww/Chroma/assets/icons/${icon}.svg');"
+
+        )
+      )
+    )
+  )
+)
+
+;; Metric card
+(defwidget tb_metric_card [reveal icon value title ]
+  (revealer :reveal "${reveal}"
+    :transition "crossfade"
+    :duration "300ms"
+    (box :class "tb-metric-card"
+      :space-evenly false 
+      :orientation "v"
+      :halign "start"
+      :valign "center"
+      (box :space-evenly true
+        :halign "fill"
+        (circular-progress :class "tb-metric-card-circ"
+          :value "${value}"
+          :start-at 50
+          :thickness 10
+          (box :class "tb-metric-card-circ-icon"
+            :style "background-image: url('/home/eluciani/.config/eww/Chroma/assets/icons/${icon}.svg');"
+          )
+        )
+        (label :class "tb-metric-card-label" :halign "start" :text "${title}")
+      )
+      (box :space-evenly false
+        :halign "start"
+        (box :class "tb-metric-card-graph-values" 
+          :space-evenly true
+          :orientation "v"
+          (label :text "100")
+          (label :text "50")
+          (label :text "0")
+        )
+        (box :class "tb-metric-card-graph-ct"
+        :width 200
+          (graph :class "tb-metric-card-graph"
+            :value "${value}"
+            :thickness 1
+            :time-range "2min"
+            :min 0
+            :max 100
+            :dynamic true
+            :height 80
+          )
+        )
+      )
+      (label :class "tb-metric-card-graph-title" 
+        :text "${title} over time"
+      )
+    )
+  )
+)
+
+;; Time
+(defwidget tb_time []
+  (eventbox 
+    :onhover "eww -c . update tb_time_card_revealer=true"
+    :onhoverlost "eww -c . update tb_time_card_revealer=false"
+    (box :class "tb-time"
+      :space-evenly false
+      :spacing 2
+      :halign "center"
+      (label :width 20 :text {time.hour})
+      (label :width 20 :text {time.min})
+    )
+  )
+)
+
+(defwidget tbc_time_card [revealer]
+  (revealer :reveal "${revealer}"
+    :duration "100ms"
+    :transition "crossfade"
+    (box :class "tbc-time-card"
+      :space-evenly false
+      :orientation "v"
+      (box :space-evenly false
+        (box :style "background-image: url('/home/eluciani/.config/eww/Chroma/assets/icons/clock.svg');")
+        (label :text "Time")
+      )
+      (box :space-evenly false
+        :orientation "v"
+        :halign "start"
+        (label :xalign 0 :text "Yesterday was ")
+        (label :xalign 0 :text "Today is ")
+        (label :xalign 0 :text "Tomorrow will be ")
+      )
+      (box :space-evenly false
+        (label :text "${weather}")
+      )
+    )
+  )
+)

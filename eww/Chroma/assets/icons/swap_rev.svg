@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+
+<svg
+   width="733.33716"
+   height="733.33716"
+   viewBox="0 0 44.000229 44.000229"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <title
+     id="title1">swap-vertical-circle-solid</title>
+  <g
+     id="Layer_2"
+     data-name="Layer 2"
+     transform="translate(-2,-1.9997706)">
+    <g
+       id="icons_Q2"
+       data-name="icons Q2"
+       style="fill: #BEA966;fill-opacity:1;stroke:none;stroke-width:0;stroke-dasharray:none">
+      <path
+         d="M 24,2 A 22,22 0 1 0 46,24 21.9,21.9 0 0 0 24,2 Z m 0.3,29.5 -4.9,4.9 a 1.9,1.9 0 0 1 -2.8,0 l -4.9,-4.9 a 2.2,2.2 0 0 1 -0.4,-2.7 2,2 0 0 1 3.1,-0.2 L 16,30.2 V 15 a 2,2 0 0 1 4,0 v 15.2 l 1.6,-1.6 a 2,2 0 0 1 3.1,0.2 2.2,2.2 0 0 1 -0.4,2.7 z M 36.7,19.2 a 2,2 0 0 1 -3.1,0.2 L 32,17.8 V 33 a 2,2 0 0 1 -4,0 V 17.8 l -1.6,1.6 a 2,2 0 0 1 -3.1,-0.2 2.1,2.1 0 0 1 0.4,-2.7 l 4.9,-4.9 a 1.9,1.9 0 0 1 2.8,0 l 4.9,4.9 a 2.1,2.1 0 0 1 0.4,2.7 z"
+         id="path1"
+         style="fill: #BEA966;fill-opacity:1;stroke:none;stroke-width:0;stroke-dasharray:none" />
+    </g>
+  </g>
+</svg>
