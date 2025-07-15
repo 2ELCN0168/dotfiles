@@ -25,7 +25,7 @@ font= Ubuntu 10
 background-color=#100F1A
 
 # Text color inside the notification( #RRGGBB | #RRGGBBAA )
-text-color=#BEA966
+text-color=#FFE397
 
 # Set width of notification popup.( value in px )
 width=299
@@ -45,7 +45,7 @@ padding=10
 border-size=1
 
 # color of border of each notification( #RRGGBB | #RRGGBBAA )
-border-color=#847144
+border-color=#7B6936
 
 # bordear radious of each notification(value in px )
 border-radius=2
