@@ -1,0 +1,52 @@
+# vim:ft=kitty
+
+## name: Vitruvian
+
+foreground            #BEA966
+background            #100F1A
+selection_foreground  #E7D593
+selection_background  #443B30
+url_color             #D7C47D
+
+active_tab_foreground    #D7C47D
+active_tab_background    #847144
+inactive_tab_foreground  #D7C47D
+inactive_tab_background  #63553A
+
+active_border_color #D7C47D
+inactive_border_color #63553A
+
+# black
+color0      #262325
+color8      #262325
+
+# red
+color1      #443B30
+color9      #443B30
+
+# green
+color2      #63553A
+color10     #63553A
+
+# yellow
+color3      #847144
+color11     #847144
+
+# blue
+color4      #A28D51
+color12     #A28D51
+
+# magenta
+color5      #BEA966
+color13     #BEA966
+
+# cyan
+color6      #D7C47D
+color14     #D7C47D
+
+# white
+color7      #F5E3AD
+color15     #F5E3AD
+
+# Cursor
+cursor      #F5E3AD
