@@ -110,3 +110,28 @@ cp "${HOME}/.config/Themes/${1}/wallpaper/background.png" \
 # Fastfetch
 cp "${HOME}/.config/Themes/${1}/fastfetch/background.png" \
     "${HOME}/.config/fastfetch/background.png"
+
+# sddm (need tokyo-night-sddm)
+if ! cp "${HOME}/.config/Themes/${1}/wallpaper/background.png" \
+    "/usr/share/sddm/themes/tokyo-night-sddm/Backgrounds/"; then
+    printf "%b" "[${R}!${N}] Error while copying background.png to /usr/share/sddm/"
+    printf "%b" "themes/tokyo-night-sddm/Backgrounds/background.png. Make sure you "
+    printf "%b" "have the permission to do so.\n"
+fi
+
+sddm_tmp="$(mktemp)"
+
+sed -E "s/(MainColor=\")#[0-9a-fA-F]{6}/\1${color2}/" "/usr/share/sddm/themes/tokyo-night-sddm/theme.conf" > "${sddm_tmp}"
+cat "${sddm_tmp}" > "/usr/share/sddm/themes/tokyo-night-sddm/theme.conf"
+sed -E "s/(BackgroundColor=\")#[0-9a-fA-F]{6}/\1${background}/" "/usr/share/sddm/themes/tokyo-night-sddm/theme.conf" > "${sddm_tmp}"
+cat "${sddm_tmp}" > "/usr/share/sddm/themes/tokyo-night-sddm/theme.conf"
+sed -E "s/(AccentColor=\")#[0-9a-fA-F]{6}/\1${color4}/" "/usr/share/sddm/themes/tokyo-night-sddm/theme.conf" > "${sddm_tmp}"
+cat "${sddm_tmp}" > "/usr/share/sddm/themes/tokyo-night-sddm/theme.conf"
+sed -E "s/(OverrideLoginButtonTextColor=\")#[0-9a-fA-F]{6}/\1${color7}/" "/usr/share/sddm/themes/tokyo-night-sddm/theme.conf" > "${sddm_tmp}"
+cat "${sddm_tmp}" > "/usr/share/sddm/themes/tokyo-night-sddm/theme.conf"
+
+if [[ "${?}" -ne 0 ]]; then
+    printf "%b" "[${R}!${N}] Error while editing /usr/share/sddm/themes/"
+    printf "%b" "tokyo-night-sddm/theme.conf. Make sure you "
+    printf "%b" "have the permission to do so.\n"
+fi
