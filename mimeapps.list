@@ -1,0 +1,8 @@
+[Added Associations]
+image/svg+xml=org.inkscape.Inkscape.desktop;com.brave.Browser.desktop;
+application/vnd.oasis.opendocument.presentation=libreoffice-impress.desktop;
+audio/flac=mpv.desktop;
+video/x-matroska=mpv.desktop;vlc.desktop;
+
+[Default Applications]
+image/svg+xml=org.inkscape.Inkscape.desktop
