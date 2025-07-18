@@ -42,10 +42,13 @@
 .tb-powermenu {
   @include tb-size-min-icon;
   background: {
-    image: url('/home/eluciani/.config/eww/Chroma/assets/color4/archlinux.svg');
+    image: url('/home/eluciani/.config/eww/Chroma/assets/color4/warframe_lotus.svg');
     position: left;
-    size: 15px;
+    size: 20px;
     repeat: no-repeat;
+  }
+  min: {
+    width: 22px;
   }
 }
 

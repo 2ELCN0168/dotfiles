@@ -99,7 +99,7 @@
 ; Sub-widgets ------------------------------------
 (defwidget tb_powermenu []
   (eventbox 
-    :onhover "eww -c . update reveal1=true"
+    :onhover "eww -c . update reveal1=true && mpv /home/eluciani/Downloads/UICommonHover.ogg &"
     :onhoverlost "eww -c . update reveal1=false"
     (box :class "tb-powermenu"
       :space-evenly false
@@ -155,7 +155,7 @@
 (defwidget tb_circ_metric [value icon reveal_var]
   (box :space-evenly false
     (eventbox 
-      :onhover "eww -c . update ${reveal_var}=true"
+      :onhover "eww -c . update ${reveal_var}=true && mpv /home/eluciani/Downloads/UICommonHover.ogg &"
       :onhoverlost "eww -c . update ${reveal_var}=false"
       (circular-progress :class "tb-circ-metric" 
         :value "${value}"

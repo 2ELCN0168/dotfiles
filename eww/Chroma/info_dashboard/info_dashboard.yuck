@@ -45,6 +45,9 @@
     (label :show-truncated false :text {time.day_short})
     (label :show-truncated false :text {time.month_full})
     (label :show-truncated false :text {time.year})
+    (label :show-truncated false :text "-")
+    (label :show-truncated false :text {time.hour >= 6 && time.hour <= 20 
+      ? "Daytime" : "Nighttime"})
   )
 )
 
