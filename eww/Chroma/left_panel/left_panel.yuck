@@ -1,0 +1,239 @@
+(defwindow left_panel
+  :geometry (geometry :x "5" :y "5" :anchor "top left"
+              :width "10" :height "10")
+  :exclusive false
+  :stacking "fg"
+  :monitor "0"
+  (left_panel)
+)
+
+;; Widgets
+(defwidget left_panel []
+  (box
+    :space-evenly false
+    (revealer :reveal "${tb_left_panel_revealer}"
+      :transition "slideleft"
+      :duration "350ms"
+      (eventbox :onrightclick "~/.config/eww/Chroma/_scripts/eww_manager.sh --left_panel &"
+        (box :class "left-panel"
+          :space-evenly false
+          :orientation "v"
+          :width 400
+          (lp_title_bar_row)
+          (box :class "lp-content"
+            :space-evenly false
+            :orientation "v"
+            :spacing 20
+            (lp_first_row)
+            (lp_second_row)
+            (lp_third_row)
+          )
+        )
+      )
+    )
+  )
+)
+
+;; Sub-Widgets
+(defwidget lp_title_bar_row []
+  (box :space-evenly true :orientation "h"
+    :halign "fill"
+    (box) ; dummy
+    (box :class "lp-title-bar"
+      (label :text "Dashboard")
+    )
+    (box :space-evenly false
+      :halign "end"
+      (eventbox :class "lp-close-btn"
+        :cursor "pointer"
+        :onclick "~/.config/eww/Chroma/_scripts/eww_manager.sh --left_panel &"
+        (label :xalign 1 :text " ")
+      )
+    )
+  )
+)
+
+;;; User row
+(defwidget lp_first_row []
+  (box :class "lp-first-row"
+    :space-evenly false
+    (lp_user)
+  )
+)
+
+;;; Second row
+(defwidget lp_second_row []
+  (box
+    :space-evenly false
+    :spacing 10
+    (lp_buttons_panel)
+    (box :space-evenly true
+      :orientation "v"
+      (lp_packages_updates)
+      (lp_monitoring)
+    )
+  )
+)
+
+;;; Third row
+(defwidget lp_third_row []
+  (box :space-evenly false
+    :orientation "h"
+    :spacing 20
+    (lp_slider :icon "audio_on" 
+      :value get_volume 
+      :onchange "~/.config/eww/Chroma/_scripts/audio.sh --set {} &" 
+      :min 0 
+      :max 101
+    )
+    (lp_slider :icon "mic_on" 
+      :value 12 
+      :onchange "echo hello &" 
+      :min 0 
+      :max 101
+    )
+    (lp_slider :icon "brightness" 
+      :value 12 
+      :onchange "echo hello &" 
+      :min 0 
+      :max 101
+    )
+  )
+)
+
+(defwidget lp_packages_updates []
+  (box
+    :space-evenly false
+    :orientation "v"
+    :spacing 5
+    (box :space-evenly false
+      :spacing 3
+      (box :class "lp-pkg-icon" :style "background-image: url('/home/eluciani/.config/eww/Chroma/assets/images/void_symbol.png');")
+      (label :show-truncated false :xalign 0 :text "${checkupdates} updates available (pacman)")
+    )
+    (box :space-evenly false
+      :spacing 3
+      (box :class "lp-pkg-icon" :style "background-image: url('/home/eluciani/.config/eww/Chroma/assets/images/cold_symbol.png');")
+      (label :show-truncated false :xalign 0 :text "${flatpak_checkupdates} updates available (flatpak)")
+    )
+  )
+)
+
+
+;;;; Buttons
+(defwidget lp_buttons_panel []
+  (box :class "lp-buttons-panel"
+    :space-evenly false
+    :orientation "v"
+    :spacing 10
+    (box
+      :space-evenly false
+      :spacing 10 
+      (lp_button :active "${net_status == 'Connected' ? true : false}" 
+        :onclick "~/.config/eww/Chroma/_scripts/network.sh --toggle &" 
+        :icon "${net_status == 'Connected' ? 'background/wifi_up' : 'icons/wifi_down'}"
+      )
+      (lp_button :active "${bluetooth_status == 'Active' ? true : false}"
+        :onclick "${EWW_CMD} update bluetooth_status=${bluetooth_status == 'Active' ? 'Inactive' : 'Active'} \
+        && ~/.config/eww/Chroma/_scripts/bluetooth.sh --toggle &"
+        :icon "${bluetooth_status == 'Active' ? 'background/bluetooth_up' : 'icons/bluetooth_down'}"
+      )
+      (lp_button :active "${bluetooth_status == 'Inactive' && net_status == 'Disconnected' ? true : false}"
+        :onclick "~/.config/eww/Chroma/_scripts/network.sh --toggle \
+        && ~/.config/eww/Chroma/_scripts/bluetooth.sh --toggle &"
+        :icon "${bluetooth_status == 'Inactive' && net_status == 'Disconnected' ? 'background/plane_on' : 'icons/plane_off'}"
+      )
+    )
+    (box
+      :space-evenly false
+      :spacing 10
+      (lp_button :active "${is_muted == 'Active' ? true : false}"
+        :onclick "${EWW_CMD} update is_muted=${is_muted == 'Active' ? 'Muted' : 'Active'} \
+        && ~/.config/eww/Chroma/_scripts/audio.sh --toggle &"
+        :icon "${is_muted == 'Active' ? 'background/audio_on' : 'icons/audio_off'}"
+      )
+    )
+  )
+)
+
+;;;; Monitoring
+(defwidget lp_monitoring []
+  (box :space-evenly true 
+    :hexpand true
+    :halign "fill"
+    :valign "fill"
+    (lp_monit_graph :value "${ram_used_percent}" :icon "ram_rev")
+    (lp_monit_graph :value "${cpu_used_percent}" :icon "cpu_rev")
+    (lp_monit_graph :value "${swap_used_percent}" :icon "swap_rev")
+  )
+)
+
+;; Modules
+(defwidget lp_user []
+  (box :space-evenly true
+    :hexpand true
+    (box :space-evenly false
+      (box :class "lp-user-pp")
+      (box :class "lp-user-infos"
+        :orientation "v"
+        :space-evenly false
+        (box :space-evenly false
+          (label :xalign 0 :class "lp-user-username" :text "${username}")
+          (box :class "lp-user-legendary-icon")
+          (label :class "lp-user-legendary-label" :xalign 1 :text "5")
+        )
+        (label :xalign 0 :class "lp-user-uptime" :text "Up ${uptime_h}h${uptime_m}")
+      )
+    )
+    (box :space-evenly false
+      :valign "start"
+      :halign "end"
+      :spacing 3
+      (box :class "lp-user-plat")
+      (label :text "2,543,182")
+    )
+  )
+)
+
+(defwidget lp_button [active onclick icon]
+  (eventbox :class "lp-button ${active ? 'active' : ''}"
+      :onclick "${onclick}"
+      :cursor "pointer"
+    (box :class "lp-button-icon"
+      :style "background-image: url('/home/eluciani/.config/eww/Chroma/assets/${icon}.svg');"
+    )
+  )
+)
+
+(defwidget lp_monit_graph [value icon]
+  (box :space-evenly true
+    (circular-progress :class "lp-circ" 
+      :value "${value}" 
+      :thickness 6 
+      :start-at 50 
+      (box :space-evenly false :class "lp-circ-label" 
+        :style "background-image: url('/home/eluciani/.config/eww/Chroma/assets/icons/${icon}.svg');"
+      )
+    )
+  )
+)
+
+(defwidget lp_slider [icon value onchange min max]
+  (box :class "lp-slider" 
+    :space-evenly false 
+    :spacing 10
+    :orientation "v"
+    :valign "center"
+    :halign "center"
+    (scale :value "${value}"
+      :onchange "${onchange}"
+      :min "${min}"
+      :max "${max}"
+      :orientation "v"
+      :flipped true
+    )
+    (box :class "lp-slider-icon"
+      :style "background-image: url('/home/eluciani/.config/eww/Chroma/assets/icons/${icon}.svg');"
+    )
+  )
+)

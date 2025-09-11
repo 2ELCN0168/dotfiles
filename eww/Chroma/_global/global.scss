@@ -1,0 +1,50 @@
+// Common variables
+$header_font: "Ailerons";
+// $header_font: "Coral Pixels";
+
+// $title_font: "Coral Pixels";
+$title_font: "Ailerons";
+
+@mixin font-common {
+  font: {
+    family: $title_font;
+    // family: "Ailerons";
+    weight: 900;
+  }
+}
+
+@mixin background-common {
+  background: {
+    position: center;
+    repeat: no-repeat;
+  }
+}
+
+@mixin tb-size-min-icon {
+  min: {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+@mixin tb-bg-common-1 {
+  background: {
+    repeat: no-repeat;
+    position: center;
+  }
+}
+
+tooltip.background {
+    // background-color: $background;
+    background-image: linear-gradient(-4deg, saturate($background, 30%), $background, saturate($background, 30%));
+    font-size: 16;
+    border-radius: 2px;
+    color: $foreground;
+    font-family: "Roboto";
+}
+
+tooltip label {
+    margin: 2px;
+}
+
+

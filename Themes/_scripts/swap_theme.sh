@@ -20,8 +20,8 @@ else
 fi
 
 # Zathura
-[[ ! -d "${HOME}/.config/zathura" ]] && mkdir "${HOME}/.config/zathura"
-cp "${HOME}/.cache/wal/colors-zathura" "${HOME}/.config/zathura/zathurarc"
+# [[ ! -d "${HOME}/.config/zathura" ]] && mkdir "${HOME}/.config/zathura"
+# cp "${HOME}/.cache/wal/colors-zathura" "${HOME}/.config/zathura/zathurarc"
 
 # Swww
 swww img --transition-step=255 \
@@ -92,6 +92,7 @@ fi
 
 "${scripts_dir}/svg_fill.py" "${HOME}/.config/eww/Chroma/assets/icons/" "${foreground}"
 "${scripts_dir}/svg_fill.py" "${HOME}/.config/eww/Chroma/assets/color4/" "${color4}"
+"${scripts_dir}/svg_fill.py" "${HOME}/.config/eww/Chroma/assets/background/" "${background}"
 
 eww -c "${HOME}/.config/eww/Chroma" reload 1> "/dev/null" 2>&1
 if [[ "${?}" -eq 0 ]]; then
@@ -112,7 +113,7 @@ cp "${HOME}/.config/Themes/${1}/fastfetch/background.png" \
     "${HOME}/.config/fastfetch/background.png"
 
 # sddm (need tokyo-night-sddm)
-if ! cp "${HOME}/.config/Themes/${1}/wallpaper/background.png" \
+if ! cp -p "${HOME}/.config/Themes/${1}/wallpaper/background.png" \
     "/usr/share/sddm/themes/tokyo-night-sddm/Backgrounds/"; then
     printf "%b" "[${R}!${N}] Error while copying background.png to /usr/share/sddm/"
     printf "%b" "themes/tokyo-night-sddm/Backgrounds/background.png. Make sure you "

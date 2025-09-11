@@ -1,6 +1,36 @@
 @import "./_global/colors.scss";
+@import "./_global/global.scss";
 @import "./options/options.scss";
 @import "./info_dashboard/info_dashboard.scss";
 @import "./top_bar/top_bar.scss";
+@import "./left_panel/left_panel.scss";
 
-@import "./_examples/revealer.scss";
+
+// Common properties ----------------------------
+@mixin font-common {
+  font: {
+    family: $title_font;
+    weight: 900;
+  }
+}
+
+@mixin background-common {
+  background: {
+    position: center;
+    repeat: no-repeat;
+  }
+}
+
+@mixin tb-size-min-icon {
+  min: {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+@mixin tb-bg-common-1 {
+  background: {
+    repeat: no-repeat;
+    position: center;
+  }
+}

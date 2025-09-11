@@ -1,32 +1,26 @@
 .top-bar {
-  background: $background;
+  // background: $background;
+  background-image: linear-gradient(-4deg, saturate($background, 30%), $background, saturate($background, 30%));
   border-radius: 2px;
   // padding: 0 20px;
   margin: {
     top: 0;
-    right: 20px;
+    // right: 20px;
     bottom: 0px;
-    left: 20px;
+    // left: 20px;
   }
   font: {
-    family: 'JetBrainsMonoNL Nerd Font';
+    // family: 'JetBrainsMonoNL Nerd Font';
+    family: $title_font;
     weight: 600;
   }
   color: $foreground;
 }
 
-// Common values --------------------------------
-@mixin tb-size-min-icon {
+.tb-border-bottom {
+  background-image: linear-gradient(to right, lighten($background, 40%), $background, lighten($background, 40%));
   min: {
-    width: 15px;
-    height: 15px;
-  }
-}
-
-@mixin tb-bg-common-1 {
-  background: {
-    repeat: no-repeat;
-    position: center;
+    height: 0.001em;
   }
 }
 
@@ -34,33 +28,97 @@
 .tb-left-section,
 .tb-center-section,
 .tb-right-section {
-  background: $background;
+  // background: $background;
   padding: 0 20px;
+  border-radius: 2px;
 }
 
-// Powermenu
-.tb-powermenu {
-  @include tb-size-min-icon;
+// Logo
+.tb-logo {
   background: {
-    image: url('/home/eluciani/.config/eww/Chroma/assets/color4/warframe_lotus.svg');
-    position: left;
-    size: 20px;
+    position: center;
+    size: 23px;
     repeat: no-repeat;
+    image: url('/home/eluciani/.config/eww/Chroma/assets/color4/warframe_lotus.svg');
   }
   min: {
-    width: 22px;
+    width: 23px;
+    height: 23px;
   }
 }
 
-.tb-pwr-button-first {
-  margin-left: 25px;
+// Music Player
+.tb-music {
+  color: $foreground;
+  margin-right: 15px;
 }
 
-.tb-pwr-button {
-  @include tb-size-min-icon;
-  @include tb-bg-common-1;
-  background-size: 14px;
-  padding: 0 4px;
+.tb-music-art {
+  min: {
+    width: 20px;
+    height: 20px;
+  }
+  margin: 10px;
+  background: {
+    size: cover;
+    position: center;
+  }
+  border-radius: 15px;
+}
+
+.tb-music-prev {
+  padding-right: 5px;
+}
+
+.tb-music-next {
+  padding-left: 5px;
+}
+
+.tb-music-card {
+  background-image: linear-gradient(-45deg, saturate($background, 30%), $background);
+  border-radius: 2px;
+  margin-top: 5px;
+  padding: 15px;
+  color: $foreground;
+}
+
+.tb-music-card-title {
+  font: {
+    family: $title_font;
+    size: 16px;
+  }
+  border-bottom: 1px solid darken($background, 20%);
+  // letter-spacing: -2px;
+  margin-bottom: 10px;
+}
+
+.tb-music-card-cover {
+  margin-right: 10px;
+  background: {
+    size: cover;
+    position: center;
+    image: url('/home/eluciani/.config/eww/Chroma/assets/music/current.jpeg');
+  }
+  min: {
+    width: 120px;
+    height: 120px;
+  }
+  border-radius: 5px;
+}
+
+.tb-music-card-song {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.tb-music-card-artist {
+  font-style: italic;
+}
+
+.tb-music-card-player-container {
+  margin-top: 20px;
+  color: $color3;
+  font-size: 22px;
 }
 
 // Labelled metric
@@ -72,12 +130,13 @@
 
 // Circular metric
 .tb-circ-metric {
-  background-color: $color0;
+  background-color: darken($background, 10%);
+  // background-color: $color0;
   color: $color3;
   .tb-circ-metric-icon {
     @include tb-bg-common-1;
-    background-size: 12px;
-    padding: 10px;
+    background-size: 7px;
+    padding: 7px;
     min: {
       width: 10px;
       height: 10px;
@@ -93,7 +152,7 @@
   border-radius: 2px;
   padding: 15px;
   font: {
-    family: 'Ailerons';
+    family: $title_font;
     weight: 900;
   }
   color: $foreground;
@@ -102,7 +161,8 @@
     height: 200px;
   }
   .tb-metric-card-circ {
-    background: $color0;
+    // background: $color0;
+    background-color: darken($background, 10%);
     color: $color3;
     .tb-metric-card-circ-icon {
       @include tb-bg-common-1;
@@ -117,11 +177,11 @@
   .tb-metric-card-label {
     color: $foreground;
     font: {
-      family: "Ailerons";
+      family: $title_font;
       size: 40px;
       weight: 900;
     }
-    letter-spacing: -6px;
+    // letter-spacing: -6px;
   }
   .tb-metric-card-graph-values {
     color: $foreground;
@@ -139,12 +199,12 @@
     margin: 20px 20px 20px 10px;
     .tb-metric-card-graph {
       color: $color3;
-      background-color: $color0;
+      background-color: desaturate(darken($color3, 5%), 20%);
     }
   }
   .tb-metric-card-graph-title {
     font-size: 16px;
-    letter-spacing: -2px;
+    // letter-spacing: -2px;
   }
 }
 
@@ -152,9 +212,10 @@
 .tb-time {
   font: {
     family: "WDXL Lubrifont SC";
+    // family: $title_font;
     size: 18px;
   }
-  letter-spacing: 1px;
+  // letter-spacing: 1px;
 }
 
 .tbc-time-card {
@@ -164,6 +225,41 @@
     top: 15px;
     right: 20px;
   }
+}
+
+.tb-sound-icon {
+  @include tb-size-min-icon;
+  @include tb-bg-common-1;
+  background-size: 14px;
+}
+
+.tb-sound-scale {
+  margin-left: 10px;
+}
+
+.tb-sound-scale trough highlight {
+  // background-image: linear-gradient(to right, $color2 30%, $color3 50%, $color6 100% *50);
+  // background: $foreground;
+  border-radius: 10px;
+  transition: all ease .1s;
+  background-image: linear-gradient(to right, $color3, lighten($color3, 10%));
+  &:hover {
+    transition: all ease .1s;
+    background-image: linear-gradient(to right, $color3, lighten($color3, 30%));
+  }
+  &:active {
+    transition: all ease .1s;
+    background-image: linear-gradient(to right, $color3, lighten($color3, 30%));
+  }
+}
+
+scale trough {
+  all: unset;
+  background-color: #22242b;
+  border-radius: 16px;
+  min-height: 5px;
+  min-width: 70px;
+  margin: 0px 10px 0px 0px;
 }
 
 

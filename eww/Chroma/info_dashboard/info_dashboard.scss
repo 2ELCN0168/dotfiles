@@ -2,44 +2,37 @@
   color: $foreground;
 }
 
-// Common properties ----------------------------
-@mixin font-common {
-  font: {
-    family: "Ailerons";
-    weight: 900;
-  }
-}
-
-@mixin background-common {
-  background: {
-    position: center;
-    repeat: no-repeat;
-  }
-}
-
 // Widgets --------------------------------------
+
+// Time
+.id-time {
+  @include font-common;
+  font-size: 64px;
+  // letter-spacing: -3px;
+}
 
 // Date 
 .id-date {
   @include font-common;
   font-size: 18px;
-  letter-spacing: -3px;
+  // letter-spacing: -3px;
   padding-left: 10px;
+  margin-bottom: 90px;
 }
 
 // Weather (33°C SUNNY)
 .id-weather {
   @include font-common;
   font-size: 64px;
-  margin-top: 80px;
-  letter-spacing: -5px;
+  // letter-spacing: -5px;
+  margin-top: 10px;
 }
 
 // Wake up, Tenno!
 .id-baseline {
   @include font-common;
   font-size: 22px;
-  letter-spacing: -5px;
+  // letter-spacing: -5px;
 }
 
 .id-baseline-logo {

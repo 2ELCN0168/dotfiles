@@ -14,9 +14,10 @@
     :orientation "v"
     :halign "start"
     :valign "start"
+    (id_time)
     (overlay
-        (id_weather)
-        (id_date :halign "start" :valign "start")
+      (id_weather)
+      (id_date :halign "start" :valign "start")
     )
     (box :space-evenly false 
       :orientation "h"
@@ -36,6 +37,14 @@
 )
 
 ; Sub-Widgets
+;; Time
+(defwidget id_time []
+  (box :class "id-time"
+    :space-evenly false
+    (label :text "${time.hour}.${time.min}'")
+  )
+)
+
 ;; Date
 (defwidget id_date []
   (box :class "id-date"
@@ -44,8 +53,7 @@
     (label :show-truncated false :text {time.day_full})
     (label :show-truncated false :text {time.day_short})
     (label :show-truncated false :text {time.month_full})
-    (label :show-truncated false :text {time.year})
-    (label :show-truncated false :text "-")
+    (label :show-truncated false :text "${time.year} -")
     (label :show-truncated false :text {time.hour >= 6 && time.hour <= 20 
       ? "Daytime" : "Nighttime"})
   )
@@ -55,6 +63,7 @@
 (defwidget id_weather []
   (box :class "id-weather"
     :halign "start"
+    :space-evenly false
     (label :show-truncated false :text "${weather}")
   )
 )

@@ -1,0 +1,178 @@
+.left-panel {
+  // background-color: $background;
+  background-image: linear-gradient(-45deg, saturate($background, 30%), $background);
+  border-radius: 2px;
+  color: $foreground;
+  padding: 10px;
+}
+
+.lp-content {
+  margin: 10px;
+}
+
+.lp-title-bar {
+  font-family: $title_font;
+  // letter-spacing: -2px;
+  font-size: 16px;
+  border-bottom: 1px solid darken($background, 20%);
+}
+
+.lp-close-btn {
+  color: $color1;
+}
+
+.lp-first-row {
+  border-bottom: 1px solid $color3;
+}
+
+.lp-user-pp {
+  background: {
+    image: url('/home/eluciani/.config/eww/Chroma/assets/images/avatar.png');
+    size: 35px;
+    repeat: no-repeat;
+    position: center;
+  }
+  min: {
+    width: 40px;
+    height: 40px;
+  }
+  border: {
+    top: 1px solid $color3;
+    right: 1px solid $color3;
+    bottom: 4px solid $color3;
+    left: 1px solid $color3;
+  }
+}
+
+.lp-user-infos {
+  margin-left: 5px;
+  .lp-user-username {
+    font-family: $title_font;
+    font-size: 20px;
+    // letter-spacing: -4px;
+  }
+  .lp-user-legendary-icon {
+    background: {
+      image: url('/home/eluciani/.config/eww/Chroma/assets/images/legendary_icon.png');
+      repeat: no-repeat;
+      position: center;
+      size: 14px;
+    }
+    min: { 
+      width: 15px;
+      height: 15px;
+    }
+  }
+  .lp-user-legendary-label {
+      font: {
+        family: $title_font;
+        size: 18px;
+      }
+    }
+  .lp-user-uptime {
+    font-style: italic;
+  }
+}
+
+.lp-user-plat {
+  background: {
+    image: url('/home/eluciani/.config/eww/Chroma/assets/images/platinum.png');
+    repeat: no-repeat;
+    position: center;
+    size: 14px;
+  }
+  min: { 
+    width: 15px;
+    height: 15px;
+  }
+  font-family: $title_font;
+}
+
+.lp-pkg-icon {
+  background: {
+    size: 18px;
+    position: center;
+    repeat: no-repeat;
+  }
+  min: {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.lp-buttons-panel {
+  background-color: lighten($background, 1%);
+  box-shadow: 3px 3px 2px darken($background, 10%);
+  padding: 10px;
+  border-radius: 5px;
+}
+.lp-button {
+  .lp-button-icon {
+    min: {
+      width: 40px;
+      height: 40px;
+    }
+    background: {
+      size: 20px;
+      position: center;
+      repeat: no-repeat;
+    }
+  }
+  transition: all ease .2s;
+  border-radius: 50px;
+  background-color: lighten($background, 5%);
+  &:hover { background-color: darken($background, 10%); }
+  &:active { background-color: darken($background, 10%); }
+
+  &.active {
+    background-color: $color3;
+    &:hover { background-color: lighten($color3, 10%); }
+  }
+}
+
+.lp-circ {
+  background-color: darken($background, 10%);
+  color: $color6;
+  .lp-circ-label {
+    background-color: transparent;
+    border-radius: 100%;
+    padding: 20px;
+    @include background-common;
+    background-size: 20px;
+    min: {
+      width: 10px;
+      height: 10px;
+    }
+  }
+}
+
+.lp-slider {
+  trough highlight {
+    // background: $color3;
+    background-image: linear-gradient(to top, $color3, lighten($color3, 10%));
+    border-radius: 2px;
+  }
+  scale trough {
+    background: desaturate(darken($color3, 50%), 20%);
+    min: {
+      width: 14px;
+      // width: 132px;
+      height: 160px;
+    }
+    border-radius: 2px;
+  }
+}
+
+.lp-slider-icon {
+  min: {
+    height: 18px;
+    width: 18px;
+  }
+
+  margin-right: 8px;
+  background: {
+    size: 16px;
+    position: center;
+    repeat: no-repeat;
+  }
+}

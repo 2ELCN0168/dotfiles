@@ -10,11 +10,14 @@
 (defpoll net_ssid :initial "N/A" :interval "10s" 
   `nmcli -t -f STATE,CONNECTION d s | \
   awk -F ':' '{ if ($1 == "connected") print $2 }'`)
+(defpoll net_status :interval "1s" `~/.config/eww/Chroma/_scripts/network.sh --status`)
+(defpoll bluetooth_status :interval "200ms" `~/.config/eww/Chroma/_scripts/bluetooth.sh --status`)
 (defpoll ram_used :initial "N/A" :interval "10s" `free --si -h | awk '/^Mem:/ { print $3 }'`)
 (defpoll ram_used_percent :initial "0" :interval "5s" `free | awk '/Mem:/ { printf("%.2f", ($3/$2)*100) }'`)
 (defpoll cpu_used_percent :initial "0" :interval "5s" `top -bn1 | awk '/^%Cpu/ { print 100 - $8 }'`)
 (defpoll swap_used_percent :initial "0" :interval "5s" `free | awk '/Swap:/ { if ($2 == 0) print 0; else printf("%.2f", ($3/$2)*100) }'`)
-(defpoll uptime_h :initial "N/A" :interval "1h" `uptime -p | awk '{ $1=$1 ; print $2 }'`) (defpoll uptime_m :initial "N/A" :interval "1min" `uptime -p | awk '{ $1=$1 ; print $4 }'`)
+(defpoll uptime_h :initial "N/A" :interval "1h" `uptime -p | awk '{ $1=$1 ; print $2 }'`) 
+(defpoll uptime_m :initial "N/A" :interval "1min" `uptime -p | awk '{ $1=$1 ; print $4 }'`)
 
 (defpoll time :interval "1s" :initial `date +'{
   "year": "%Y", 
@@ -38,3 +41,31 @@
 
 (defpoll weather :interval "15min" `curl -s 'wttr.in/Montberon?format=%t+%C' | tr -d [+] | tr [:lower:] [:upper:]`)
 (defpoll checkupdates :interval "2min" `checkupdates | wc -l`)
+(defpoll flatpak_checkupdates :interval "2min" `flatpak remote-ls --updates | wc -l`)
+
+; Music
+(deflisten song `playerctl -p spotify --follow metadata --format '{{ title }}'`)
+(deflisten song_album `playerctl -p spotify --follow metadata --format '{{ album }}'`)
+(deflisten song_artist `playerctl -p spotify --follow metadata --format '{{ artist }}'`)
+(deflisten song_position `playerctl -p spotify --follow metadata --format '{{ duration(position) }}'`)
+(deflisten song_ttime `playerctl -p spotify --follow metadata --format '{{ duration(mpris:length) }}'`)
+(defpoll song_status :interval "1s" "~/.config/eww/Chroma/_scripts/music_info.sh --status")
+(deflisten cover_art `playerctl -p spotify --follow metadata --format '{{ mpris:artUrl }}'`)
+
+; Audio
+(defpoll is_muted :interval "1s" `~/.config/eww/Chroma/_scripts/audio.sh --is_muted`)
+(defpoll get_volume :interval "1s" `~/.config/eww/Chroma/_scripts/audio.sh --get_volume`)
+
+; Top Bar Variables
+(defvar tb_left_panel_revealer false)
+(defvar tb_music_revealer false)
+(defvar tb_music_card_revealer false)
+(defvar tb_sound_revealer false)
+(defvar tb_ram_card_revealer false)
+(defvar tb_cpu_card_revealer false)
+(defvar tb_swap_card_revealer false)
+(defvar tb_time_card_revealer false)
+(defvar tb_plain_bar "//background: transparent;")
+(defvar tb_plain_sections "//background: transparent;")
+
+

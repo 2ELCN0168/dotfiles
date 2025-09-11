@@ -1,71 +1,76 @@
 (defwindow top_bar 
-  :geometry (geometry :x "0" :y "10" :anchor "top center"
-              :width "1930" :height "40")
+  :geometry (geometry :x "0" :y "0" :anchor "top center"
+              :width "1930" :height "35")
   :stacking "bg"
   :exclusive true
   :monitor "0"
   (top_bar :plain_bar tb_plain_bar :plain_sections tb_plain_sections)
 )
 
-(defwindow top_bar_cards
+; (defwindow top_bar_cards
+;   :geometry (geometry :x "0" :y "0" :anchor "top center"
+;               :width "1930" :height "0")
+;   :stacking "fg"
+;   :exclusive false
+;   :monitor "0"
+;   (top_bar_cards)
+; )
+
+(defwindow tb_music_win
   :geometry (geometry :x "0" :y "0" :anchor "top center"
-              :width "1930" :height "40")
-  :stacking "bg"
+              :width "300" :height "0")
+  :stacking "fg"
   :exclusive false
   :monitor "0"
-  (top_bar_cards)
+  (tb_music_card)
 )
-
-(defvar reveal1 false)
-(defvar tb_ram_card_revealer false)
-(defvar tb_cpu_card_revealer false)
-(defvar tb_swap_card_revealer false)
-(defvar tb_time_card_revealer false)
-(defvar tb_plain_bar "//background: transparent;")
-(defvar tb_plain_sections "//background: transparent;")
-; (deflisten tb_workspaces "../_scripts/hyprland_workspaces.sh")
 
 ; Widget ----------------------------------------
 (defwidget top_bar [plain_bar plain_sections]
-  (box :class "top-bar"
-    :space-evenly true
-    :style "${plain_bar}"
-    (box :class "tb-left-section"
-      :space-evenly false
-      :halign "start"
-      :style "${plain_sections}"
-      (tb_powermenu)
-    )
-    (box :class "tb-center-section"
-      :space-evenly false
-      :halign "center"
-      :style "${plain_sections}"
-      ; "Enzo LUCIANI"
-      (tb_workspaces)
-    )
-    (box :class "tb-right-section"
-      :space-evenly false
-      :spacing 15
-      :halign "end"
-      :style "${plain_sections}"
-      ; (tb_metric :value cpu_used_percent :icon "cpu_rev" :add "%")
-      (tb_circ_metric :value ram_used_percent 
-        :icon "ram_rev"
-        :reveal_var "tb_ram_card_revealer"
+  (box :space-evenly false
+    :orientation "v"
+    (box :class "top-bar"
+      :space-evenly true
+      :style "${plain_bar}"
+      (box :class "tb-left-section"
+        :space-evenly false
+        :halign "start"
+        :valign "center"
+        :style "${plain_sections}"
+        (tb_logo)
       )
-      (tb_circ_metric :value cpu_used_percent 
-        :icon "cpu_rev"
-        :reveal_var "tb_cpu_card_revealer"
+      (box :class "tb-center-section"
+        :space-evenly false
+        :halign "center"
+        :style "${plain_sections}"
+        (tb_music)
       )
-      (tb_circ_metric :value swap_used_percent 
-        :icon "swap_rev"
-        :reveal_var "tb_swap_card_revealer"
+      (box :class "tb-right-section"
+        :space-evenly false
+        :spacing 15
+        :halign "end"
+        :style "${plain_sections}"
+        (tb_sound)
+        (tb_circ_metric :value ram_used_percent 
+          :icon "dot"
+          :reveal_var "tb_ram_card_revealer"
+          :tooltip "RAM"
+        )
+        (tb_circ_metric :value cpu_used_percent 
+          :icon "dot"
+          :reveal_var "tb_cpu_card_revealer"
+          :tooltip "CPU"
+        )
+        (tb_circ_metric :value swap_used_percent 
+          :icon "dot"
+          :reveal_var "tb_swap_card_revealer"
+          :tooltip "Swap"
+        )
+        (tb_metric :value checkupdates :icon "box_rev" :tooltip "Pending updates")
+        (tb_time)
       )
-      ; (tb_circ_metric :value cpu_used_percent :icon "cpu_rev")
-      ; (tb_metric :value ram_used_percent :icon "ram_rev" :add "%")
-      (tb_metric :value checkupdates :icon "box_rev")
-      (tb_time)
     )
+    (box :class "tb-border-bottom")
   )
 )
 
@@ -97,25 +102,45 @@
 )
 
 ; Sub-widgets ------------------------------------
-(defwidget tb_powermenu []
-  (eventbox 
-    :onhover "eww -c . update reveal1=true && mpv /home/eluciani/Downloads/UICommonHover.ogg &"
-    :onhoverlost "eww -c . update reveal1=false"
-    (box :class "tb-powermenu"
+(defwidget tb_logo []
+  (box :class "tb-logo" :tooltip "Open dashboard"
+    (eventbox
+      :onclick "/home/eluciani/.config/eww/Chroma/_scripts/eww_manager.sh --left_panel &"
+    )
+  )
+)
+
+;; Music
+(defwidget tb_music []
+  (eventbox :onhover "${EWW_CMD} update tb_music_revealer=true"
+    :onhoverlost "${EWW_CMD} update tb_music_revealer=false"
+    (box :class "tb-music"
       :space-evenly false
-      :halign "start"
-      :valign "center"
+      :orientation "h"
+      (box :class "tb-music-art"
+        :style "background-image: url('${cover_art}');"
+      )
+      (eventbox :class "tb-music"
+        :cursor "pointer" 
+        :onclick "~/.config/eww/Chroma/_scripts/eww_manager.sh --top_bar_music_win &"
+        song
+      )
       (revealer :transition "slideleft"
-        :reveal reveal1
-        (box :space-evenly false
-          (tb_pwr_button :_class "tb-pwr-button-first"
-            :action "systemctl poweroff"
-            :icon "power"
+        :reveal tb_music_revealer
+        :duration "350ms"
+        (box :orientation "h"
+          (eventbox :class "tb-music-prev"
+            :cursor "pointer" 
+            :onclick "~/.config/eww/Chroma/_scripts/music_info.sh --prev" ""
           )
-          (tb_pwr_button :action "systemctl reboot" :icon "reload")
-          (tb_pwr_button :action "hyprctl dispatch exit" :icon "exit")
-          (tb_pwr_button :action "hyprctl dispatch exec -- hyprlock" 
-            :icon "lock"
+          (eventbox :class "tb-music-play" 
+            :cursor "pointer" 
+            :onclick "~/.config/eww/Chroma/_scripts/music_info.sh --toggle" 
+            song_status
+          )
+          (eventbox :class "tb-music-next" 
+            :cursor "pointer" 
+            :onclick "~/.config/eww/Chroma/_scripts/music_info.sh --next" ""
           )
         )
       )
@@ -123,40 +148,124 @@
   )
 )
 
-(defwidget tb_pwr_button [?_class action icon]
-  (box :class "tb-pwr-button ${_class}" 
-      :style "background-image: url('/home/eluciani/.config/eww/Chroma/assets/icons/${icon}.svg');"
-    (eventbox
-      :cursor "pointer"
-      :onclick "${action}"
+(defwidget tb_music_card []
+  (eventbox
+    :onrightclick "~/.config/eww/Chroma/_scripts/eww_manager.sh --top_bar_music_win &"
+    (revealer :transition "slidedown"
+      :duration "350ms"
+      :reveal "${tb_music_card_revealer}"
+      (box :class "tb-music-card"
+        :space-evenly false
+        :orientation "v"
+        (box :space-evenly true
+          :halign "fill"
+          (box) ; dummy
+          (label :class "tb-music-card-title" :text "Music Player")
+          (box) ; dummy
+        )
+        (box
+          :orientation "h"
+          :space-evenly false
+          (box :class "tb-music-card-cover"
+            :style "background-image: url('${cover_art}');"
+          )
+          (box :orientation "v"
+            :space-evenly false
+            :halign "start"
+            (label :class "tb-music-card-song" 
+              :show-truncated false 
+              :xalign 0 
+              :text "${song}"
+            )
+            (label :class "tb-music-card-album" 
+              :show-truncated false 
+              :xalign 0 
+              :text "${song_album}"
+            )
+            (label :class "tb-music-card-artist" 
+              :show-truncated false 
+              :xalign 0 
+              :text "${song_artist}"
+            )
+            (box :space-evenly false
+              (label :class "tb-music-card-position"
+                :show-truncated false 
+                :xalign 0 
+                :text "${song_position}"
+              )
+              (label :xalign 0.5 :text "-" :width 10)
+              (label :class "tb-music-card-position"
+                :show-truncated false 
+                :xalign 0 
+                :text "${song_ttime}"
+              )
+            )
+            (box :class "tb-music-card-player-container" 
+              :orientation "h"
+              :space-evenly true
+              (eventbox :class ""
+                :cursor "pointer" 
+                :onclick "~/.config/eww/Chroma/_scripts/music_info.sh --prev" ""
+              )
+              (eventbox :class "" 
+                :cursor "pointer" 
+                :onclick "~/.config/eww/Chroma/_scripts/music_info.sh --toggle" 
+                song_status
+              )
+              (eventbox :class "" 
+                :cursor "pointer" 
+                :onclick "~/.config/eww/Chroma/_scripts/music_info.sh --next" ""
+              )
+            )
+          )
+        )
+      )
     )
   )
 )
 
-;; Workspaces
-(defwidget tb_workspaces []
-  (box :class "workspaces"
-    :space-evenly false
-    :halign "center"
+;; Sound
+(defwidget tb_sound []
+  (eventbox
+    :onhover "${EWW_CMD} update tb_sound_revealer=true"
+    :onhoverlost "${EWW_CMD} update tb_sound_revealer=false"
+    (box :space-evenly false
+      (box :class "tb-sound-icon"
+        :style "background-image: url('/home/eluciani/.config/eww/Chroma/assets/icons/volume.svg');"
+      )
+      (revealer :reveal tb_sound_revealer
+        :transition "slideleft"
+        (scale :class "tb-sound-scale"
+          :orientation "h"
+          :value get_volume
+          :min 0
+          :max 101
+          :onchange "~/.config/eww/Chroma/_scripts/audio.sh --set {} &"
+        )
+      )
+    )
   )
 )
 
 ;; Labelled metric 
-(defwidget tb_metric [value icon ?add]
+(defwidget tb_metric [value icon ?add ?tooltip]
   (box :space-evenly false
     :spacing 5
+    :tooltip "${tooltip}"
     (box :class "tb-metric"
-      :style "background-image: url('/home/eluciani/.config/eww/Chroma/assets/icons/${icon}.svg');")
+      :style "background-image: url('/home/eluciani/.config/eww/Chroma/assets/icons/${icon}.svg');"
+    )
     (label :text "${value}${add}")
   )
 )
 
 ;; Circular metric
-(defwidget tb_circ_metric [value icon reveal_var]
+(defwidget tb_circ_metric [value icon reveal_var ?tooltip]
   (box :space-evenly false
+    :tooltip "${tooltip}"
     (eventbox 
-      :onhover "eww -c . update ${reveal_var}=true && mpv /home/eluciani/Downloads/UICommonHover.ogg &"
-      :onhoverlost "eww -c . update ${reveal_var}=false"
+      :onhover "~/.config/eww/Chroma/_scripts/eww_manager.sh --top_bar_monit_card tb_cpu_card_revealer &"
+      :onhoverlost "~/.config/eww/Chroma/_scripts/eww_manager.sh --top_bar_monit_card tb_cpu_card_revealer &"
       (circular-progress :class "tb-circ-metric" 
         :value "${value}"
         :start-at 50
@@ -225,14 +334,13 @@
 ;; Time
 (defwidget tb_time []
   (eventbox 
-    :onhover "eww -c . update tb_time_card_revealer=true"
-    :onhoverlost "eww -c . update tb_time_card_revealer=false"
+    :onhover "${EWW_CMD} update tb_time_card_revealer=true"
+    :onhoverlost "${EWW_CMD} update tb_time_card_revealer=false"
     (box :class "tb-time"
       :space-evenly false
       :spacing 2
       :halign "center"
-      (label :width 20 :text {time.hour})
-      (label :width 20 :text {time.min})
+      (label :show-truncated false :xalign 1 :width 100 :text "${time.hour} : ${time.min}")
     )
   )
 )
