@@ -1,6 +1,6 @@
 [general]
 import = [
-    '/home/eluciani/Documents/Development/Github/2ELCN0168-alacritty-themes/themes/synthwave_84.toml'
+    '~/git/2ELCN0168-alacritty-themes/themes/synthwave_84.toml'
 ]
 
 [font]

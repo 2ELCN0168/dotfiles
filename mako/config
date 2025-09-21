@@ -22,10 +22,10 @@ on-notify=exec mpv /usr/share/sounds/freedesktop/stereo/message.oga
 font= Ubuntu 10
 
 # background color of notification( #RRGGBB | #RRGGBBAA )
-background-color=#100F1A
+background-color=#001A29
 
 # Text color inside the notification( #RRGGBB | #RRGGBBAA )
-text-color=#FFE397
+text-color=#D7FEFF
 
 # Set width of notification popup.( value in px )
 width=299
@@ -45,7 +45,7 @@ padding=10
 border-size=1
 
 # color of border of each notification( #RRGGBB | #RRGGBBAA )
-border-color=#7B6936
+border-color=#03A9FF
 
 # bordear radious of each notification(value in px )
 border-radius=2
@@ -55,6 +55,7 @@ progress-color=over #0b1c1c
 
 # Show icons in notifications.( value: -1 | 1 )
 icons=1
+icon-path=/usr/share/icons/Papirus/
 
 #  Set maximum icon size to px pixels.(value in px)
 max-icon-size=64

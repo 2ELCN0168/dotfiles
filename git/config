@@ -1,0 +1,64 @@
+[user]
+	name = Enzo LUCIANI
+	email = lcn.en.perso+git@protonmail.com
+
+[core]
+	compression = 9
+	whitespace = error
+	preloadindex = true
+
+[advice]
+	addEmptyPathspec = false
+	pushNonFastForward = true
+	statusHint = false
+
+[init]
+	defaultBranch = dev
+
+[status]
+	branch = true
+	showStash = true
+	showUntrackedFiles = all
+
+[diff]
+	context = 3
+	renames = copies 
+	interHunkContext = 10
+
+[pager]
+	diff = less
+
+[push]
+	autoSetupRemote = true
+	default = current
+	followTags = true
+
+[pull]
+	default = current
+
+[log]
+	abbrevCommit = true
+	graphColors = blue,yellow,cyan,magenta,green,red
+
+[credential]
+    helper = cache --timeout=3600
+
+[color "diff"]
+	meta = black bold
+	frag = magenta
+	context = white
+	whitespace = yellow reverse
+	old = red
+
+[color "branch"]
+	current = magenta
+	local = default
+	remote = yellow
+	upstream = green
+	plain = blue
+
+[url "git@github.com:"]
+	insteadOf = "gh:"
+
+[url "git@github.com:2ELCN0168/"]
+	insteadOf = "el:"

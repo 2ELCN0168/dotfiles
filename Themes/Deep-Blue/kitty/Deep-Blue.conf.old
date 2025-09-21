@@ -1,0 +1,52 @@
+# vim:ft=kitty
+
+## name: Deep-Blue
+
+foreground            #CAF5FB
+background            #001D29
+selection_foreground  #01293B
+selection_background  #015B80
+url_color             #009AC5
+
+active_tab_foreground    #7EEFFD
+active_tab_background    #009AC5
+inactive_tab_foreground  #7EEFFD
+inactive_tab_background  #013F5D
+
+active_border_color      #7EEFFD
+inactive_border_color    #009AC5
+
+# black
+color0      #00253B
+color8      #00253B
+
+# red
+color1      #003651
+color9      #003651
+
+# green
+color2      #013F5D
+color10     #013F5D
+
+# yellow
+color3      #015B80
+color11     #015B80
+
+# blue
+color4      #009AC5
+color12     #009AC5
+
+# magenta
+color5      #00DDF5
+color13     #00DDF5
+
+# cyan
+color6      #7EEFFD
+color14     #7EEFFD
+
+# white
+color7      #B0F1F9
+color15     #B0F1F9
+
+# Cursor
+cursor      #B0F1F9
