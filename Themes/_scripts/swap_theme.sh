@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 G='\033[92m'
 R='\033[91m'
@@ -8,6 +8,14 @@ N='\033[0m'
 scripts_dir="$(pwd)"
 
 source "${HOME}/.cache/wal/colors.sh"
+
+if [[ "${#}" -gt 0 ]]; then
+    case "${1}" in
+        --list | -l)
+            find /home/eluciani/.config/Themes/ -maxdepth 1 -mindepth 1 \
+                ! -iname "_*" -printf "%f\n" && exit 0 ;;
+    esac
+fi
 
 # Kitty
 cp "${HOME}/.config/Themes/${1}/kitty/${1}.conf" \
@@ -113,7 +121,7 @@ cp "${HOME}/.config/Themes/${1}/fastfetch/background.png" \
     "${HOME}/.config/fastfetch/background.png"
 
 # sddm (need tokyo-night-sddm)
-if ! cp -p "${HOME}/.config/Themes/${1}/wallpaper/background.png" \
+if ! cp "${HOME}/.config/Themes/${1}/wallpaper/background.png" \
     "/usr/share/sddm/themes/tokyo-night-sddm/Backgrounds/"; then
     printf "%b" "[${R}!${N}] Error while copying background.png to /usr/share/sddm/"
     printf "%b" "themes/tokyo-night-sddm/Backgrounds/background.png. Make sure you "
@@ -135,4 +143,9 @@ if [[ "${?}" -ne 0 ]]; then
     printf "%b" "[${R}!${N}] Error while editing /usr/share/sddm/themes/"
     printf "%b" "tokyo-night-sddm/theme.conf. Make sure you "
     printf "%b" "have the permission to do so.\n"
+fi
+
+# Sway
+if [[ -n "${SWAYSOCK}" ]]; then
+    swaymsg reload
 fi
