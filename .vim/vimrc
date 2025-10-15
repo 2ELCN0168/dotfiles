@@ -1,0 +1,429 @@
+" vim :set ts=4 sw=4 et:
+" Maintainer: Enzo LUCIANI
+" Sections:
+"   => Sourced files
+"   => General
+"   => Swap, undos, backups 
+"   => Vim UI 
+"     => Status Line 
+"   => Colors & Font
+"   => Text, tabs, indent & else
+"   => Quick actions & map leader
+"   => Filetypes detection
+"   => Custom functions
+
+" => Sourced files {{{
+source ~/.vim/scripts/correct_bg.vim
+source ~/.vim/scripts/WatchForChanges.vim
+source ~/.vim/scripts/cve-2017-1000382.vim
+
+" }}}
+
+" => General {{{
+set all&
+set runtimepath=~/.vim,$VIMRUNTIME
+set packpath=~/.vim,$VIMRUNTIME
+
+" Use Vim defaults instead of 100% vi compatibility
+" Avoid side-effects when nocompatible has already been set.
+if &compatible
+  set nocompatible
+endif
+
+" Makes .vim/ a higher priority than system files
+set runtimepath^=~/.vim
+
+" Commands history
+set history=1000
+" Time to update swap
+set updatetime=400
+
+" Enable autoread and set autocommand with following events to send 
+" a 'checktime'
+set autoread
+"autocmd FocusLost,FocusGained,BufEnter,CursorMoved,CursorMovedI,CursorMovedC,CursorHold,CursorHoldI * checktime
+"autocmd BufEnter * WatchForChanges
+
+" Return to last edited line when opening files again
+autocmd BufReadPost * 
+    \ if line("'\"") > 1 && line("'\"") <= line("$") 
+    \ | exe "normal! g'\"" 
+    \ | endif
+
+" Enable filetype plugins
+filetype plugin on
+filetype indent on
+
+" Display non-printable characters
+set list 
+
+" Disable auto-masked characters (markdown)...
+set conceallevel=0
+
+" Markdown relative options (preservim/vim-markdown)
+let g:vim_markdown_conceal = 0
+let g:tex_conceal = ""
+let g:vim_markdown_math = 1
+let g:vim_markdown_conceal_code_blocks = 0
+let g:vim_markdown_fenced_languages = ['bash=sh']
+let g:vim_markdown_borderless_table = 1
+
+" Set correct clipboard (Wayland compatible)
+set clipboard+=unamedplus
+
+" Sudo-write even if permission error
+command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
+
+set suffixes+=.aux,.bbl,.blg,.brf,.cb,.dvi,.idx,.ilg
+set suffixes+=.ind,.inx,.jpg,.log,.out,.png,.toc
+set suffixes-=.h
+set suffixes-=.obj
+
+" Don't scan included files
+set complete-=i
+
+" Disable octal format for processing
+set nrformats-=octal
+
+" }}}
+
+"   => Swap, undos, backups  {{{
+call mkdir(expand('~/.vim/.backupdir/'), 'p')
+call mkdir(expand('~/.vim/.swapfiles/'), 'p')
+call mkdir(expand('~/.vim/.undodir/'), 'p')
+set backupdir=~/.vim/.backupdir//
+set directory=~/.vim/.swapfiles//
+set undodir=~/.vim/.undodir//
+set undofile " Enable undofile
+
+" }}}
+
+" => Vim UI {{{
+" Adjust the terminal window title to Vim's custom title including the filename
+set title
+" Don't display the intro message on starting Vim.
+set shortmess+=I
+" Always keep 7 lines above or below the cursor while scrolling
+set scrolloff=7
+
+set langmenu=en
+
+" Enable completion menu in command mode
+set wildmenu
+
+" Always show position (column + line)
+set ruler
+
+" Show line number
+set number
+
+" Set commandline height
+set cmdheight=1
+
+" Hide a buffer when it becomes abandonned
+set hid
+
+set backspace=eol,indent,start
+set whichwrap+=<,>,h,l
+
+" Ignore case when searching
+set ignorecase
+
+" When searching, try to be smart about the cases
+set smartcase
+
+set incsearch
+
+" Highlight matching search results
+set hlsearch
+
+" Show matching pairs (brackets and else)
+set showmatch
+
+" Enable faster redrawing
+set ttyfast
+set lazyredraw
+
+set magic
+
+set matchtime=2
+
+if !has('nvim') && &ttimeoutlen == -1
+    set ttimeout
+    set ttimeoutlen=100
+endif
+
+set noerrorbells
+set novisualbell
+set t_vb=
+set tm=500
+
+" Add a bit of extra margin to the left
+set foldcolumn=1
+
+set signcolumn=yes
+
+" Autofold based on indent
+set foldmethod=indent
+autocmd FileType vim,swayconfig setlocal foldmethod=marker
+" Unfold everything on opening
+set foldlevelstart=99
+
+" => Status Line {{{
+" Enable statusline
+set laststatus=2
+
+set statusline=\ %{ModeStatus()}\ %#Green#\ %F%m\ %#StatusLine#\ 
+    \%#Red#\ %r\ %#StatusLine#\ %y\ 
+    \%=\ %#Purple#\ %p%%\ %#StatusLine#\ 
+    \Char:%#Blue#\ <%{UnicodeChar()}>\ %#StatusLine#\ Ln:%l/%L\ Col:%c
+
+
+"let g:currentmode={
+"  \ 'n' : 'NORMAL ',
+"  \ 'v' : 'VISUAL ',
+"  \ 'V' : 'V-LINE ',
+"  \ 'i' : 'INSERT ',
+"  \ 'R' : 'R ',
+"  \ 'Rv' : 'V-REPLACE ',
+"  \ 'c' : 'COMMAND ',
+"\}
+"
+"colorscheme tokyonight
+"hi NormalC ctermfg=Green ctermbg=NONE
+"
+"set statusline=
+"set statusline+=%#Icon#
+"set statusline+=\ 
+"set statusline+=\ %#NormalC#%{(mode()=='n')?'\ NORMAL\ ':''}
+"set statusline+=%#InsertC#%{(mode()=='i')?'\ INSERT\ ':''}
+"set statusline+=%#VisualC#%{(mode()=='v')?'\ VISUAL\ ':''}
+"set statusline+=%#Filename#
+"set statusline+=\ %f
+"set statusline+=%#ReadOnly#
+"set statusline+=\ %r
+"set statusline+=%m
+"set statusline+=%=
+"set statusline+=%#Fileformat#
+"set statusline+=\ %y
+"set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
+"set statusline+=\ [%{&fileformat}\]
+"set statusline+=%#Position#
+"set statusline+=\ [%l/%L]
+"
+" }}}
+
+" }}}
+
+" => Colors & Font {{{
+" Enable syntax-highlighting (YAY!)
+syntax enable
+
+" Enable cursorline
+set cursorline
+
+" Disable mode display as it's already in statusline
+set noshowmode
+
+" Display columns 80 and 100
+set colorcolumn=80,100
+
+" Enable cursorcolumn
+"set cursorcolumn
+
+set regexpengine=0
+
+if $COLORTERM == "truecolor"
+	set t_Co=256
+endif
+
+" Allow color schemes to do bright colors without forcing bold.
+if &t_Co == 8 && $TERM !~# '^Eterm'
+  set t_Co=16
+endif
+
+" Improve displayed color if supported by terminal
+if &t_Co >= 256
+  set termguicolors
+end
+
+try
+	colorscheme tokyonight 
+	catch
+endtry
+
+set background=dark
+
+set encoding=utf-8
+set fileencoding=utf-8
+
+set ffs=unix,mac,dos
+
+" }}}
+
+" => Text, tabs, indent & else {{{
+" Use spaces instead of tabs
+set expandtab
+
+set smarttab
+
+" Delete comment character when joining commented lines
+if v:version > 703 || v:version == 703 && has("patch541")
+  set formatoptions+=j
+endif
+
+" 1 tab = 4 spaces
+set shiftwidth=4
+set tabstop=4
+
+set linebreak
+set textwidth=100
+
+" Autoindent
+set autoindent
+set smartindent
+
+" Wrap lines
+set wrap
+
+" Call CleanExtraSpaces() before saving on specified filetypes
+if has("autocmd")
+    autocmd BufWritePre *.txt, *.js, *.c, *.h, *.cpp, *.sh, *.py 
+    \ :call CleanExtraSpaces()
+endif
+
+" }}}
+
+" => Quick actions & map leader {{{
+" Define a map leader to add quick actions
+if !exists("mapleader")
+    let mapleader="\<Space>"
+endif
+" Quick actions are defined here
+nmap <leader>ss :source ~/.vim/vimrc<cr>
+
+" Use <C-L> to clear the highlighting of :set hlsearch.
+if maparg('<C-L>', 'n') ==# ''
+  nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
+endif
+
+"" Buffers management 
+" Close current buffer (leader)
+map <leader>bd :Bufclose<cr>:tabclose<cr>gT
+
+" Close all buffers (leader)
+map <leader>ba :bufdo bd<cr>
+
+" Move between buffers (hjkl movements)
+map <leader>h :bprevious<cr>
+map <leader>l :bnext<cr>
+
+"" Tabs management 
+" Create a new tab
+map <leader>tn :tabnew<cr>
+
+" Close (delete) the current tab
+map <leader>td :tabclose<cr>
+
+" Close every tab except the current
+map <leader>to :tabonly<cr>
+
+" Move current tab to position X
+map <leader>tm :tabmove
+
+" Move between tabs (hjkl movements)
+map <leader>th :tabprevious<cr>
+map <leader>tl :tabnext<cr>
+
+"" Windows Management
+" Move between windows (hjkl movements)
+map <C-h> <C-W>h
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-l> <C-W>l
+
+" New splits appears below and to the right
+set splitbelow
+set splitright
+
+"" Others
+" Switch CWD to the currently edited buffer's directory
+map <leader>cd :cd %:p:h<cr>:pwd<cr>
+
+" Toggle paste mode on and off
+map <leader>pp :setlocal paste!<cr>
+
+" }}}
+
+" => Filetypes detection {{{
+let s:filetype_settings = {
+    \ 'yaml'   : 'ts=2 sts=2 sw=2 expandtab',
+    \ 'python' : 'ts=2 sts=2 sw=2 expandtab',
+    \ 'sh'     : 'ts=4 sts=4 sw=4 expandtab',
+    \ 'bash'   : 'ts=4 sts=4 sw=4 expandtab',
+    \ 'zsh'    : 'ts=4 sts=4 sw=4 expandtab',
+    \ 'c'      : 'ts=8 sts=8 sw=8 expandtab',
+    \ 'h'      : 'ts=8 sts=8 sw=8 expandtab',
+    \ 'cpp'    : 'ts=8 sts=8 sw=8 expandtab'
+\ }
+
+augroup FileTypeSettings
+    autocmd!
+    for [ft, opts] in items(s:filetype_settings)
+        execute 'autocmd FileType' ft 'setlocal' opts
+    endfor
+augroup END
+
+" }}}
+
+" => Custom functions {{{
+" Return Unicode character code
+function! UnicodeChar()
+  let l:char = matchstr(getline('.'), '\%' . col('.') . 'c.' )
+  let l:unicode = char2nr(l:char)
+  return printf("U+%04X", l:unicode)
+endfunction
+
+" Detect Mode
+function! ModeStatus()
+    let m = mode()
+    if m ==# 'n'
+        return 'NORMAL'
+    elseif m ==# 'i'
+        return 'INSERT'
+    elseif m ==# 'v'
+        return 'VISUAL'
+    elseif m ==# 'V'
+        return 'V-LINE'
+    elseif m ==# "\<C-v>"
+        return 'V-BLOCK'
+    elseif m ==# 'R'
+        return 'REPLACE'
+    elseif m ==# 'Rv'
+        return 'V-REPLACE'
+    elseif m ==# 's'
+        return 'SELECT'
+    elseif m ==# 'S'
+        return 'S-LINE'
+    elseif m ==# "\<C-s>"
+        return 'S-BLOCK'
+    elseif m ==# 'c'
+        return 'COMMAND'
+    elseif m ==# 't'
+        return 'TERMINAL'
+    else
+        return toupper(m)
+    endif
+endfunction
+
+" Delete trailing spaces on save
+function! CleanExtraSpaces()
+    let save_cursor = getpos(".")
+    let old_query = getreg('/')
+    silent! %s/\s/+$//e
+    call setpos('.', save_cursor)
+    call setreg('/', old_query)
+endfunction
+
+" }}}
+let g:markdown_syntax_conceal=0
