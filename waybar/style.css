@@ -36,8 +36,8 @@ window {
 #workspaces button.focused {
     color: @background;
     background: @color3; 
-    transition: all ease .2s;
     border-bottom: 3px solid @color3;
+    transition: all ease .2s;
 }
 
 #workspaces button.empty {
@@ -46,8 +46,26 @@ window {
 }
 
 /* Idle Inhibitor */
-#idle_inhibitor {
+#idle_inhibitor.deactivated {
     color: @color1;
+    padding-right: 4px;
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    transition: all ease .2s;
+}
+
+#idle_inhibitor.deactivated:hover {
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid @color1;
+    transition: all ease .2s;
+}
+
+#idle_inhibitor.activated {
+    color: @color3;
+    padding-right: 4px;
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid @color3;
+    transition: all ease .2s;
 }
 
 /* Taskbar */
@@ -55,6 +73,12 @@ window {
     /* 3px padding because of 3px border-bottom */
     padding: 3px 5px 0 5px;
     border-bottom: 3px solid transparent;
+    transition: all ease .2s;
+}
+
+#taskbar button.active {
+    padding: 3px 5px 0 5px;
+    border-bottom: 3px solid @color3;
     transition: all ease .2s;
 }
 
@@ -66,24 +90,35 @@ window {
 
 /* Crypto */
 #custom-crypto {
-    color: @color0;
+    color: @color7;
+    /* Override by pango markup in script */
 }
 
 /* MPRIS */
 #mpris {
-    /* color: rgba(255, 255, 255, 0.3); */
-    color: @color8;
+    padding-left: 8px;
+    color: @color4;
+    opacity: .4;
 }
 
 /* Custom */
 #custom-logo {
     color: @color3;
     font-size: 16px;
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    transition: all ease .2s
+}
+
+#custom-logo:hover {
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid @color3;
+    transition: all ease .2s
 }
 
 #custom-separator {
-    /* color: rgba(255, 255, 255, 0.2); */
-    color: @color8;
+    color: @color7;
+    opacity: .3;
 }
 
 /* CPU */
