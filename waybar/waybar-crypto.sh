@@ -10,4 +10,6 @@ if [[ "${filter}" == *-* ]]; then
     echo "<span foreground=\"${color1}\">${filter}</span>"
 elif [[ "${filter}" == *+* ]]; then
     echo "<span foreground=\"${color2}\">${filter}</span>"
+else
+    echo "<span foreground=\"${foreground}\">${filter}</span>"
 fi
